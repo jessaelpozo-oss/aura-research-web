@@ -12,6 +12,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
+  
+  /* Base responsive */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { width: 100%; overflow-x: hidden; }
+img, video { max-width: 100%; height: auto; display: block; }
+
+/* Contenedor típico */
+.container{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px; /* respira en móvil */
+}
+
     :root{
       --aura:#148B75;
       --aura2:#1FAF96;
@@ -311,11 +325,38 @@
       .logo{width:120px; height:80px}
     }
 
-    @media(max-width:560px){
-      header{padding:14px 14px}
-      .topbar{padding:10px 12px}
-      .bannerContent h1{font-size:38px}
-    }
+    /* ===== Mobile fixes ===== */
+	@media (max-width: 560px){
+	  /* Más espacio útil para leer */
+	  .wrap{ padding: 0 14px 120px; }            /* deja aire abajo por el botón flotante */
+	  .sectionInner{ padding: 22px 18px; }       /* antes 46px: en móvil era demasiado */
+	  .lead{ font-size: 16px; line-height: 1.7; max-width: 100%; }
+	  .tile{ padding: 18px; }
+
+	  /* Evita que el CTA tape el texto */
+	  body{ padding-bottom: 110px; }            /* “zona segura” para el botón */
+	  .float{ right: 12px; bottom: 12px; }      /* un poco más pegado a borde */
+	  .float .btn{ padding: 12px 14px; font-size: 14px; }
+	}
+
+	
+	@media (max-width: 768px){
+  /* si tienes secciones en filas, pásalas a columna */
+  .row, .hero, .about, .services, .contact {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  /* textos que suelen romper */
+  h1 { font-size: 32px !important; line-height: 1.15; }
+  h2 { font-size: 24px !important; }
+  p  { font-size: 16px !important; }
+
+  /* botones/menús que se desbordan */
+  .btns, .nav-links { flex-wrap: wrap !important; }
+}
+
+	
   </style>
 </head>
 
