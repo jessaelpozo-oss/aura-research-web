@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AURA Research</title>
+  <meta name="description" content="AURA Research: acompañamiento académico y científico en tesis e investigación, con rigor metodológico, ética y confidencialidad." />
+  <meta name="theme-color" content="#0A1220" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --aura:#148B75;
+      --aura2:#1FAF96;
+      --ink:#0A1220;
+      --muted:#51627D;
+      --bg:#F5F7FB;
+      --line:rgba(10,18,32,.12);
+      --shadow:0 22px 60px rgba(10,18,32,.12);
+
+      --d-text:#F4F7FF;
+      --d-muted:rgba(244,247,255,.76);
+      --d-line:rgba(255,255,255,.14);
+      --d-card:rgba(255,255,255,.08);
+
+      --max:1240px;
+      --r-xl:32px;
+      --r-lg:26px;
+      --r-md:18px;
+
+      --fz:17px;
+      --fz-sm:14.5px;
+      --fz-lg:19px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size:var(--fz);
+      color:var(--ink);
+      background:
+        radial-gradient(900px 520px at 8% 0%, rgba(31,175,150,.10), transparent 60%),
+        radial-gradient(900px 520px at 95% 10%, rgba(10,18,32,.06), transparent 60%),
+        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 70%, #FFFFFF 100%);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+
+    /* ===== Topbar fija (arriba del todo) ===== */
+		   .topbar{
+		  position:relative;  /* ya no se queda pegada */
+		  padding:14px 20px;
+		  pointer-events:none;
+		}
+
+    header{
+      pointer-events:auto;
+      width:min(var(--max), 100%);
+      margin:0 auto;
+      background:rgba(10,18,32,.94);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:28px;
+      backdrop-filter:blur(10px);
+      box-shadow:0 18px 50px rgba(0,0,0,.22);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:16px 18px;
+      transition: background .25s ease, box-shadow .25s ease;
+    }
+
+    header.scrolled{ background:rgba(10,18,32,.975); box-shadow:0 18px 60px rgba(0,0,0,.28); }
+
+    /* Brand: SOLO logo + espacio grande */
+    .brand{display:flex; align-items:center; gap:14px;}
+	
+	
+    .logo{
+	  width: 140px;
+	  height: 90px;
+	  border-radius: 26px;
+	  border: 1px solid rgba(255,255,255,.16);
+	  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+	  display: grid;
+	  place-items: center;
+	  box-shadow: 0 16px 32px rgba(20,139,117,.18);
+	  overflow: hidden;
+	}
+
+	
+    .logo span{font-weight:900; font-size:12px; letter-spacing:.22em; color:rgba(244,247,255,.75)}
+
+
+	.logoImg{
+	  width: 100%;
+	  height: 100%;
+	  object-fit: contain;
+	  padding: 6px;
+	  display: block;
+	}
+
+
+    nav{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;}
+
+    .navlink{font-size:14.5px; color:var(--d-muted); padding:12px 14px; border-radius:999px; transition:background .2s ease, color .2s ease;}
+    .navlink:hover{color:var(--d-text); background:rgba(255,255,255,.08)}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:13px 18px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.08);
+      color:var(--d-text);
+      transition: transform .2s ease, background .2s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.12)}
+
+    .btn.cta{background:linear-gradient(135deg, var(--aura), var(--aura2)); border-color:rgba(20,139,117,.60); color:#fff; box-shadow:0 18px 44px rgba(20,139,117,.28)}
+    .btn.ghost{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)}
+
+    /* Spacer para no tapar contenido */
+    .spacer{height:128px;}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px 140px;}
+
+    /* ===== Banner (carrusel) ===== */
+    .banner{margin-top:18px; border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow);}
+    .slides{position:relative; min-height:520px; background:#0A1220; overflow:hidden;}
+    .slide{position:absolute; inset:0; opacity:0; transform:scale(1.02); transition:opacity .8s ease, transform 1s ease; background-size:cover; background-position:center;}
+    .slide.active{opacity:1; transform:scale(1)}
+
+    .slideOverlay{position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(10,18,32,.92) 0%, rgba(10,18,32,.55) 50%, rgba(10,18,32,.18) 100%),
+        radial-gradient(760px 560px at 18% 30%, rgba(31,175,150,.18), transparent 60%);
+    }
+
+    .bannerContent{position:relative; padding:56px; max-width:880px;}
+    .kicker{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.20); background:rgba(255,255,255,.08); color:rgba(255,255,255,.92); font-size:14px;}
+    .bannerContent h1{margin:16px 0 14px; font-size:60px; line-height:1.02; letter-spacing:-.02em; color:#fff;}
+    .bannerContent p{margin:0 0 22px; font-size:var(--fz-lg); line-height:1.9; color:rgba(255,255,255,.88); max-width:68ch;}
+    .bannerActions{display:flex; gap:14px; flex-wrap:wrap;}
+
+    .bannerControls{position:absolute; left:46px; bottom:28px; display:flex; gap:10px; align-items:center;}
+    .dot{width:11px; height:11px; border-radius:999px; border:1px solid rgba(255,255,255,.45); background:rgba(255,255,255,.22); cursor:pointer;}
+    .dot.active{background:rgba(20,139,117,1); border-color:rgba(20,139,117,1);}
+
+    /* ===== Sections ===== */
+    section{margin-top:22px;}
+    .section{border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow);}
+    .sectionInner{padding:46px; border:1px solid var(--line); background:#fff;}
+
+    .sectionDark .sectionInner{background:linear-gradient(180deg, #0A1220 0%, #111B30 100%); color:var(--d-text); border-color:rgba(255,255,255,.12)}
+
+    .section h2{margin:0 0 14px; font-size:30px;}
+    .lead{margin:0 0 30px; font-size:18px; line-height:1.9; color:#4A5A73; max-width:92ch;}
+    .sectionDark .lead{color:var(--d-muted)}
+
+    .grid3{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;}
+    .grid2{display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch;}
+
+    .tile{border-radius:26px; padding:24px; border:1px solid rgba(10,18,32,.10); background:rgba(10,18,32,.02)}
+    .tile h3{margin:0 0 10px; font-size:18px}
+    .tile p{margin:0; font-size:15.5px; line-height:1.8; color:#5B6C86}
+
+    .sectionDark .tile{background:var(--d-card); border-color:rgba(255,255,255,.14)}
+    .sectionDark .tile p{color:rgba(244,247,255,.80)}
+
+    /* ===== Galería ===== */
+    .photoCard{border-radius:28px; overflow:hidden; border:1px solid rgba(10,18,32,.10); background:#fff; min-height:290px; position:relative; box-shadow:0 16px 40px rgba(10,18,32,.10)}
+    .photoCard .img{position:absolute; inset:0; background-size:cover; background-position:center; filter:saturate(1.05) contrast(1.02)}
+    .photoCard .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,18,32,.00) 0%, rgba(10,18,32,.68) 90%)}
+    .photoCard .caption{position:absolute; left:20px; right:20px; bottom:18px; color:#fff}
+    .photoCard .caption b{display:block; font-size:16px}
+    .photoCard .caption span{display:block; margin-top:6px; font-size:13.5px; color:rgba(255,255,255,.82); line-height:1.6}
+
+    /* ===== Planes (progresión de diseño) ===== */
+    .plans{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
+
+    .plan{border-radius:28px; padding:26px; position:relative; overflow:hidden;}
+    .plan > *{position:relative; z-index:1}
+
+    /* ESENCIAL: básico, limpio */
+    .plan.essential{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      box-shadow:0 12px 34px rgba(0,0,0,.16);
+    }
+
+    /* AVANZADO: más diseño (banda lateral) */
+    .plan.advanced{
+      border:1px solid rgba(31,175,150,.30);
+      background:linear-gradient(180deg, rgba(31,175,150,.16), rgba(255,255,255,.06));
+      box-shadow:0 14px 38px rgba(0,0,0,.18);
+    }
+    .plan.advanced::before{
+      content:"";
+      position:absolute; left:-60px; top:-60px;
+      width:180px; height:180px;
+      background:radial-gradient(circle, rgba(31,175,150,.35), transparent 65%);
+      filter: blur(2px);
+    }
+
+    /* ÉLITE: top diseño (shine + borde glow) */
+    .plan.elite{
+      border:1px solid rgba(31,175,150,.40);
+      background:
+        radial-gradient(700px 320px at 18% 0%, rgba(31,175,150,.28), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      box-shadow:0 18px 48px rgba(0,0,0,.22);
+    }
+    .plan.elite::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.16) 35%, transparent 70%);
+      transform: translateX(-40%) rotate(8deg);
+      opacity:.45;
+      pointer-events:none;
+    }
+
+    .tag{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; font-weight:900; font-size:13px; letter-spacing:.02em; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); color:var(--d-text)}
+    .plan.elite .tag{background:linear-gradient(135deg, var(--aura), var(--aura2)); border-color:rgba(31,175,150,.45)}
+
+    .plan h3{margin:14px 0 10px; font-size:20px; color:var(--d-text)}
+    .plan p{margin:0 0 14px; font-size:15.5px; line-height:1.9; color:var(--d-muted)}
+    .plan ul{margin:0 0 18px; padding-left:18px; color:rgba(244,247,255,.84); font-size:15.5px; line-height:1.9}
+
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap}
+
+    /* Servicios */
+    .servicesList{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
+
+    /* Artículo */
+    .articleGrid{display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch}
+
+    .articleCard{border-radius:28px; padding:26px; border:1px solid rgba(10,18,32,.10); background:#fff}
+    .sectionDark .articleCard{border-color:rgba(255,255,255,.14); background:var(--d-card)}
+
+    .badge{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; font-weight:900; font-size:13px; background:rgba(31,175,150,.12); color:var(--aura)}
+
+    .articleTitle{margin:14px 0 10px; font-size:22px}
+    .abstract{margin:0 0 14px; font-size:16px; line-height:1.9; color:#5B6C86}
+    .citation{font-size:14.5px; line-height:1.7; color:#6A7C96}
+
+    .paperImage{border-radius:24px; overflow:hidden; border:1px solid rgba(10,18,32,.10); min-height: 340px; position:relative; box-shadow:0 16px 40px rgba(10,18,32,.10)}
+    .paperImage .img{position:absolute; inset:0; background-size:cover; background-position:center}
+    .paperImage .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,18,32,.10) 0%, rgba(10,18,32,.74) 92%)}
+    .paperImage .caption{position:absolute; left:20px; right:20px; bottom:18px; color:#fff}
+    .paperImage .caption b{display:block; font-size:16px}
+    .paperImage .caption span{display:block; margin-top:6px; font-size:13.5px; color:rgba(255,255,255,.84); line-height:1.6}
+
+    /* Contacto (CLARO, no oscuro) */
+    .contactGrid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    .contactCardLight{border-radius:28px; padding:26px; border:1px solid rgba(10,18,32,.10); background:#fff; box-shadow:0 16px 40px rgba(10,18,32,.10)}
+
+    .field{display:grid; gap:8px; margin-top:12px}
+    label{font-size:13px; color:#6A7C96}
+
+    input, select, textarea{
+      width:100%;
+      border:1px solid rgba(10,18,32,.14);
+      background:#FFFFFF;
+      color:var(--ink);
+      padding:13px 14px;
+      border-radius:16px;
+      font-size:15px;
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+
+    input:focus, select:focus, textarea:focus{
+      border-color:rgba(31,175,150,.70);
+      box-shadow:0 0 0 5px rgba(31,175,150,.16);
+    }
+
+    textarea{min-height:96px; resize:vertical}
+
+    .noteLight{margin-top:14px; padding:14px; border-radius:18px; border:1px solid rgba(31,175,150,.26); background:rgba(31,175,150,.08); color:#0F5E50; font-size:14px; line-height:1.8}
+
+    /* Credenciales + copyright más grandes */
+    .credBar{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .chip{padding:10px 12px; border-radius:999px; border:1px solid rgba(10,18,32,.12); background:rgba(10,18,32,.02); font-weight:800; font-size:14px; color:#0A1220}
+
+    .copyright{margin-top:18px; font-size:15px; color:#40506A; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+
+    /* Reveal */
+    .reveal{opacity:0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease}
+    .reveal.show{opacity:1; transform: translateY(0)}
+
+    /* Floating CTA */
+    .float{position:fixed; right:16px; bottom:16px; z-index:140}
+
+    @media(max-width:1100px){
+      .grid2,.grid3,.plans,.servicesList,.articleGrid,.contactGrid{grid-template-columns:1fr}
+      .bannerContent{padding:40px}
+      .bannerContent h1{font-size:44px}
+      .spacer{height:140px}
+      nav{gap:8px}
+      .logo{width:120px; height:80px}
+    }
+
+    @media(max-width:560px){
+      header{padding:14px 14px}
+      .topbar{padding:10px 12px}
+      .bannerContent h1{font-size:38px}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Topbar fija -->
+  <div class="topbar">
+    <header id="hdr">
+      <div class="brand">
+       <div class="logo" aria-label="Logo AURA Research">
+		<img src="./logo.png" alt="AURA Research" class="logoImg">
+			</div>
+        </div>
+  
+
+      <nav>
+		<a class="navlink" href="#galeria">¿Qué es AURA?</a>
+		<a class="navlink" href="#articulo">Artículo</a>
+		<a class="navlink" href="#planes">Planes</a>
+        <a class="navlink" href="#servicios">Servicios</a>
+        <a class="btn" href="#contacto">Contacto</a>
+        <a class="btn cta" href="#contacto">Solicitar info</a>
+      </nav>
+    </header>
+  </div>
+
+
+
+  <div class="wrap">
+    <!-- Banner -->
+    <div class="banner reveal" id="inicio">
+      <div class="slides" aria-label="Banner AURA Research">
+        <div class="slide active" id="slide0"></div>
+        <div class="slide" id="slide1"></div>
+        <div class="slide" id="slide2"></div>
+        <div class="slideOverlay" aria-hidden="true"></div>
+
+        <div class="bannerContent">
+          <div class="kicker">Metodología • Rigor • Ética • Ciencias Médicas</div>
+          <h1>Tu tesis no tiene que sentirse imposible.</h1>
+          <p>
+            AURA ofrece corrección académica, metodología y apoyo estratégico 
+			para que tu trabajo cumpla criterios y se sostenga en la defensa.
+          </p>
+          <div class="bannerActions">
+            <a class="btn cta" href="#planes">Ver Planes AURA</a>
+            <a class="btn ghost" href="#articulo">Artículo de la semana</a>
+            <a class="btn ghost" href="#contacto">Hablar conmigo</a>
+          </div>
+        </div>
+
+        <div class="bannerControls" id="dots" aria-label="Controles de carrusel"></div>
+      </div>
+    </div>
+
+    <!-- Galería -->
+    <section class="section reveal" id="galeria">
+      <div class="sectionInner">
+        <h2>No estás atrasado: estás sin estructura.</h2>
+        <p class="lead">Cuando hay método, la tesis avanza y se defiende con confianza.</p>
+
+        <div class="grid3">
+          <div class="photoCard"><div class="img" id="g0"></div><div class="overlay"></div><div class="caption"><b></b><span>¿Estás cerca de la defensa y tu trabajo aún no está solido?</span></div></div>
+          <div class="photoCard"><div class="img" id="g1"></div><div class="overlay"></div><div class="caption"><b></b><span>¿Tienes datos pero no sabes cómo tabular ni qué pruebas usar?</span></div></div>
+          <div class="photoCard"><div class="img" id="g2"></div><div class="overlay"></div><div class="caption"><b></b><span>¿Necesitas diapositivas y simulaciones para defender sin miedo?</span></div></div>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="grid2">
+          <div class="photoCard" style="min-height:320px"><div class="img" id="g3"></div><div class="overlay"></div><div class="caption"><b>Andrew Pozo</b><span>Magister en Metodología de la Investigación en Salud / Director de AURA Research</span></div></div>
+          <div class="grid3" style="grid-template-columns:1fr; gap:18px">
+            <div class="tile"><h3>Filosofía</h3><p>AURA Research es un entorno investigativo, conformado por profesionales de salud e investigadores, que se sustenta en los
+principios de la investigación científica rigurosa, la ética académica y el
+acompañamiento formativo. No sustituye la autoría intelectual del
+estudiante, sino que fortalece sus competencias investigativas mediante
+guía experta, análisis metodológico y corrección especializada.</p></div>
+            <div class="tile"><h3>Objetivo</h3><p>Brindar acompañamiento académico e investigativo especializado a
+estudiantes de pregrado y posgrado, garantizando rigor metodológico,
+ética científica y calidad académica en tesis, trabajos de investigación y
+artículos científicos, contribuyendo a la formación de profesionales críticos,
+competentes y comprometidos con la ciencia.
+</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+	
+	    <!-- Artículo científico de la semana -->
+    <section class="section reveal" id="articulo">
+      <div class="sectionInner">
+        <h2>Artículo científico de la semana</h2>
+        <p class="lead">Una sección sobre ciencia y actualizaciones en el campo de la salud.</p>
+
+        <div class="articleGrid">
+          <div class="articleCard">
+            <div class="badge">AURA Weekly Paper</div>
+            <div class="articleTitle" id="paperTitle">(Título del artículo)</div>
+            <p class="abstract" id="paperAbstract">(Abstract corto de 3–4 líneas, lenguaje claro y útil.)</p>
+            <div class="citation" id="paperCitation">(Cita Vancouver corta + DOI/enlace)</div>
+            <div style="height:12px"></div>
+          </div>
+
+          <div class="articleCard" style="padding:0; border:none; background:transparent; box-shadow:none">
+            <div class="paperImage">
+              <div class="img" id="paperImg"></div>
+              <div class="overlay"></div>
+              <div class="caption">
+              </div>
+            </div>
+            <div style="height:14px"></div>
+            <div class="grid3" style="grid-template-columns:1fr; gap:14px">
+              <div class="tile"><h3>Estadísticos</h3><p id="k1">(Insight rápido)</p></div>
+              <div class="tile"><h3>Conclusiones</h3><p id="k2">(Insight rápido)</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Planes (oscuro) -->
+    <section class="section sectionDark reveal" id="planes">
+      <div class="sectionInner">
+        <h2>Planes AURA</h2>
+        <p class="lead">Según tu requerimiento, tenemos distintos planes para ti.</p>
+
+        <div class="plans">
+          <div class="plan essential">
+            <div class="tag">Plan Esencial</div>
+            <h3>Lo necesario y específico para tu Tesis</h3>
+            <p>Para investigaciones de bajo riesgo metodológico. Para servicios limitados.</p>
+            <ul>
+              <li>Correcciones y observaciones técnicas</li>
+              <li>Redacción de capítulos según protocolo</li>
+              <li>Análisis estadístico descriptivo</li>
+			  <li>Soporte básico</li>
+            </ul>
+            <div class="ctaRow">
+              <a class="btn" href="#contacto">Quiero Esencial</a>
+              <a class="btn cta" href="#contacto">Solicitar</a>
+            </div>
+          </div>
+
+          <div class="plan advanced">
+            <div class="tag">Plan Avanzado</div>
+            <h3>Profundidad + soporte</h3>
+            <p>Para Tesis que requieren alta exigencia en método, instrumentos y análisis. Para servicios completos.</p>
+            <ul>
+              <li>Correcciones y observaciones profundas</li>
+              <li>Redacción de capítulos según protocolo</li>
+              <li>Análisis estadístico avanzado</li>
+			  <li>Soporte por videollamadas</li>
+			  <li>Diapositivas profesionales</li>
+			  <li>1 simulacro de defensa</li>
+			  <li>1 reporte Turnitin</li>
+            </ul>
+            <div class="ctaRow">
+              <a class="btn" href="#contacto">Quiero Avanzado</a>
+              <a class="btn cta" href="#contacto">Solicitar</a>
+            </div>
+          </div>
+
+          <div class="plan elite">
+            <div class="tag">Plan Élite</div>
+            <h3>Estándar máximo</h3>
+            <p>Para Tesis complejas y servicios premium.</p>
+            <ul>
+              <li>Todo el plan avanzado</li>
+              <li>Ajustes continuos post-tutorías</li>
+			  <li>2 simulacros de defensa</li>
+			  <li>Acompañamiento intensivo</li>
+			  <li>Turnitin continuo</li>
+			  <li>Redacción de artículo científico derivado de la tesis</li>
+            </ul>
+            <div class="ctaRow">
+              <a class="btn cta" href="#contacto">Quiero Élite</a>
+              <a class="btn" href="#servicios">Complementos</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Servicios -->
+    <section class="section reveal" id="servicios">
+      <div class="sectionInner">
+        <h2>Servicios (módulos)</h2>
+        <p class="lead">Si solo necesitas una parte, trabajamos por módulos específicos.</p>
+        <div class="servicesList">
+          <div class="tile"><h3>Diagnóstico(en caso de trabajo parcial)</h3><p>Si aún no te decides por el plan te ofrecemos como parte del dx: revisión completa de tu avance + informe de corrrecciones generales + videollamada explicativa</p></div>
+          <div class="tile"><h3>Servicios Parciales</h3>
+		  <ul>
+			<li>Protocolo</li>
+			<li>Planteamiento de problema, justificación</li>
+			<li>Marco teórico</li>
+			<li>Metodología</li>
+			<li>Resultados y discusión</li>		  
+		  </ul>
+			</div>
+          <div class="tile"><h3>Análisis Estadístico</h3><p>Análisis Bioestadístico Univariante y Bivariante. Técnicas Multivariantes y validez de pruebas diagnósticas</p></div>
+          <div class="tile"><h3>Corrección de plagio</h3><p>Reducción de plagio y corrección de citas bibliográficas</p></div>
+          <div class="tile"><h3>Artículos científicos</h3><p>Artículos derivados de trabajo previo</p></div>
+		  <div class="tile"><h3>Para la sustentación</h3><p> Diapositivas, clases explicativas, simulacros de defensas</p></div>
+		  <div class="tile"><h3>Asesorías profesionales</h3><p>Paquetes de asesorías académicas por horas</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Turnitin (sección se mantiene, pero fuera del menú) -->
+    <section class="section sectionDark reveal" id="turnitin">
+      <div class="sectionInner">
+        <h2>Turnitin informe anti-plagio</h2>
+        <p class="lead">Trabajamos con Turnitin para ofrecerte trabajos de calidad sin plagio.</p>
+        <div class="grid3">
+          <div class="tile"><h3>Detecta</h3><p>Identifica coincidencias antes de la entrega.</p></div>
+          <div class="tile"><h3>Corrige</h3><p>Mejoramos citación, paráfrasis y estructura.</p></div>
+          <div class="tile"><h3>Entrega seguro</h3><p>Menos observaciones evitables.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto (CLARO) -->
+    <section class="section reveal" id="contacto">
+      <div class="sectionInner">
+        <h2>Contactanos</h2>
+        <p class="lead">No pierdas la posibilidad de que tu trabajo esté en manos de profesionales en el campo.</p>
+
+        <div class="contactGrid">
+          <div class="contactCardLight">
+            <div style="font-weight:900; font-size:18px">Enviar información</div>
+
+            <div class="field">
+              <label>Tu nombre</label>
+              <input id="name" placeholder="Ej: Andrew" />
+            </div>
+
+            <div class="field">
+              <label>Qué buscas</label>
+              <select id="need">
+                <option>Plan AURA Esencial</option>
+                <option>Plan AURA Avanzado</option>
+                <option>Plan AURA Élite</option>
+                <option>Diagnóstico</option>
+                <option>Servicio Específico</option>
+                <option>Informe Turnitin</option>
+                <option>Defensa</option>
+				<option>Más información</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Fecha límite (opcional)</label>
+              <input id="deadline" placeholder="Ej: 15 días / marzo / 2026" />
+            </div>
+
+            <div class="field">
+              <label>Contexto breve (opcional)</label>
+              <textarea id="context" placeholder="Ej: ya tengo resultados; me falta discusión y formato..." ></textarea>
+            </div>
+
+            <div class="field">
+              <a class="btn cta" id="ctaSend" href="#">Enviar</a>
+            </div>
+
+            <div class="noteLight">
+              AURA Research es acompañamiento académico: tú eres el autor. No se inventan datos ni se sustituye autoría.
+            </div>
+          </div>
+
+          <div class="contactCardLight">
+            <div style="font-weight:900; font-size:18px">Confianza sin humo</div>
+            <p style="margin:12px 0 0; color:#44556F; line-height:1.9; font-size:16px">
+              No necesitas “hacer todo hoy”. Necesitas corregir <b>lo importante</b> primero.
+              Si tu tesis se siente pesada, casi siempre es por falta de estructura y dirección.
+			  Contáctanos por Whatsapp en este instante y consulta por nuestros servicios.
+            </p>
+
+            <div class="credBar">
+              <div class="chip">Rigor metodológico</div>
+              <div class="chip">Confidencialidad</div>
+              <div class="chip">Ética académica</div>
+              <div class="chip">Soporte para defensa</div>
+            </div>
+
+            <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+              <a class="btn" href="#planes" style="background:#0A1220; color:#fff; border-color:#0A1220">Ver planes</a>
+              <a class="btn cta" id="ctaQuick" href="#">Whatsapp AURA</a>
+            </div>
+
+            <div class="copyright">
+              <div><b>© <span id="year"></span> AURA Research</b> · Cuenca, Ecuador · Atención online</div>
+              <div><b>Fundador:</b> Andrew Pozo · Mgst. en Metodología de la Investigación en Salud.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="float">
+    <a class="btn cta" href="#contacto">Solicitar info</a>
+  </div>
+
+  <script>
+    // ✅ Cambia este número (formato internacional). Ecuador: +593 y sin el 0 inicial.
+    const PHONE = "593996484119";
+
+    // ✅ Imágenes del banner (URLs o rutas locales)
+	
+    const BANNER_IMAGES = [
+		  "./banner-1.png",
+		  "./banner-2.png",
+		  "./banner-3.png"
+		];
+
+    // ✅ Imágenes de galería (puedes poner tuyas)
+    const GALLERY_IMAGES = [
+		  "./galeria1.png",
+		  "./galeria2.png",
+		  "./galeria3.png",
+		  "./galeria4.png"
+		];
+
+    // ✅ Artículo de la semana (edita aquí cada semana)
+    const WEEKLY_PAPER = {
+      title: "Senolíticos: El primer paso real hacia la reversión del envejecimiento cognitivo",
+      abstract: "Este estudio piloto investigó la viabilidad y seguridad de los senolíticos Dasatinib y Quercetina en adultos mayores con riesgo de Alzheimer. La intervención buscó eliminar células senescentes para mejorar déficits en la cognición y la velocidad de la marcha. Los resultados preliminares sugieren que este tratamiento intermitente es seguro y podría ofrecer beneficios funcionales significativos.",
+      citation: "Millar CL, Iloputaife I, Baldyga K, Norling AM, Boulougoura A, Vichos T, et al. A pilot study of senolytics to improve cognition and mobility in older adults at risk for Alzheimer's disease. eBioMedicine. 2025;113:105612. doi:10.1016/j.ebiom.2025.105612",
+      image: "./revista.png",
+      takeaway: "Te lo traduzco en 3 ideas accionables para tu tesis.",
+      key1: "Se utilizaron correlaciones de Spearman para vincular cambios en biomarcadores con resultados funcionales, revelando una asociación significativa entre menor inflamación y mejor cognición (r=-0.65, P=0.02). Se aplicaron modelos lineales mixtos para evaluar trayectorias de cambio y t-tests para comparar concentraciones de biomarcadores contra un grupo control. Los intervalos de confianza del 95% confirmaron la relevancia estadística de las mejoras en los subgrupos con mayor deterioro.",
+      key2: "La investigación concluye que la terapia senolítica intermitente es una estrategia factible para modular el fenotipo secretor asociado a la senescencia (SASP). Estos hallazgos sientan las bases para futuros ensayos clínicos aleatorizados a gran escala con grupos de control de placebo. El objetivo final es validar si la eliminación dirigida de células <<zombie>> puede prevenir formalmente la progresión hacia la demencia tipo Alzheimer.",
+    };
+
+    function waLink(msg){
+      return `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+    }
+
+    function buildMessage(extra){
+      const name = (document.getElementById('name')?.value || '').trim();
+      const need = document.getElementById('need')?.value || 'Plan AURA Esencial';
+      const deadline = (document.getElementById('deadline')?.value || '').trim();
+      const context = (document.getElementById('context')?.value || '').trim();
+
+      const who = name ? `Hola, soy ${name}.` : 'Hola.';
+      const lim = deadline ? ` Mi fecha límite es: ${deadline}.` : '';
+      const ctx = context ? ` Contexto: ${context}.` : '';
+      const add = extra ? ` ${extra}` : '';
+
+      return `${who} Vengo desde la web de AURA Research. Quiero: ${need}.${lim}${ctx}${add} ¿Cómo empezamos y qué debo enviarte?`;
+    }
+
+    // Header scroll state
+    const hdr = document.getElementById('hdr');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 12) hdr.classList.add('scrolled');
+      else hdr.classList.remove('scrolled');
+    });
+
+    // Año
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Banner images
+    const slideEls = [document.getElementById('slide0'), document.getElementById('slide1'), document.getElementById('slide2')];
+    slideEls.forEach((el, i) => {
+      el.style.backgroundImage = `url('${BANNER_IMAGES[i] || BANNER_IMAGES[0]}')`;
+    });
+
+    // Carousel dots
+    const dotsWrap = document.getElementById('dots');
+    let idx = 0;
+    const dots = slideEls.map((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+      return d;
+    });
+
+    function goTo(i){
+      idx = i;
+      slideEls.forEach((s, k) => s.classList.toggle('active', k === idx));
+      dots.forEach((d, k) => d.classList.toggle('active', k === idx));
+    }
+    setInterval(() => goTo((idx + 1) % slideEls.length), 6500);
+
+    // Gallery images
+    const g0 = document.getElementById('g0');
+    const g1 = document.getElementById('g1');
+    const g2 = document.getElementById('g2');
+    const g3 = document.getElementById('g3');
+    if(g0) g0.style.backgroundImage = `url('${GALLERY_IMAGES[0]}')`;
+    if(g1) g1.style.backgroundImage = `url('${GALLERY_IMAGES[1]}')`;
+    if(g2) g2.style.backgroundImage = `url('${GALLERY_IMAGES[2]}')`;
+    if(g3) g3.style.backgroundImage = `url('${GALLERY_IMAGES[3]}')`;
+
+    // Weekly paper inject
+    const pt = document.getElementById('paperTitle');
+    const pa = document.getElementById('paperAbstract');
+    const pc = document.getElementById('paperCitation');
+    const pi = document.getElementById('paperImg');
+    const tk = document.getElementById('paperTakeaway');
+    const k1 = document.getElementById('k1');
+    const k2 = document.getElementById('k2');
+    const k3 = document.getElementById('k3');
+
+    if(pt) pt.textContent = WEEKLY_PAPER.title;
+    if(pa) pa.textContent = WEEKLY_PAPER.abstract;
+    if(pc) pc.textContent = WEEKLY_PAPER.citation;
+    if(pi) pi.style.backgroundImage = `url('${WEEKLY_PAPER.image}')`;
+    if(tk) tk.textContent = WEEKLY_PAPER.takeaway;
+    if(k1) k1.textContent = WEEKLY_PAPER.key1;
+    if(k2) k2.textContent = WEEKLY_PAPER.key2;
+    if(k3) k3.textContent = WEEKLY_PAPER.key3;
+
+    // Contact CTAs (WhatsApp)
+    const ctaSend = document.getElementById('ctaSend');
+    if(ctaSend){
+      ctaSend.href = waLink(buildMessage());
+      ctaSend.addEventListener('click', () => { ctaSend.href = waLink(buildMessage()); });
+    }
+
+    const ctaQuick = document.getElementById('ctaQuick');
+    if(ctaQuick){
+      ctaQuick.href = waLink(buildMessage('Quiero la ruta rápida: dime qué corregir primero.'));
+      ctaQuick.addEventListener('click', () => { ctaQuick.href = waLink(buildMessage('Quiero la ruta rápida: dime qué corregir primero.')); });
+    }
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
