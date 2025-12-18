@@ -356,41 +356,34 @@ img, video { max-width: 100%; height: auto; display: block; }
   .btns, .nav-links { flex-wrap: wrap !important; }
 }
 
-/* ===== Compact mobile (más junto / menos espacio) ===== */
+
+/* ===== Mobile: más compacto y mejor distribución ===== */
 @media (max-width: 560px){
 
-  /* Tipografía más compacta */
-  body{ font-size: 15px; }
-  p{ line-height: 1.55 !important; }
-  
-  /* Menos espacios verticales generales */
+  /* Quita “aire” y evita que el texto se vuelva angosto */
+  .wrap{ padding: 0 12px 110px; }     /* +110px para que no tape el CTA */
   section{ margin-top: 12px; }
-  .wrap{ padding: 0 12px 96px; } /* menos padding y aún deja espacio por el botón flotante */
-  
-  /* Secciones: reduce mucho el “aire” */
-  .sectionInner{ padding: 16px 14px; }
-  .section h2{ margin: 0 0 8px; font-size: 22px; }
-  .lead{ margin: 0 0 14px; font-size: 15px; line-height: 1.55; }
 
-  /* Grids y tarjetas: menos separación */
+  .sectionInner{ padding: 16px 14px; } /* antes 46px */
+  .tile{ padding: 14px; border-radius: 18px; } /* antes 24px y 26px */
+
+  /* Tipografía más compacta y legible */
+  h2{ font-size: 22px !important; margin: 0 0 8px !important; }
+  p{ font-size: 15px !important; line-height: 1.55 !important; white-space: normal; }
+
+  /* Reduce separaciones entre tarjetas */
   .grid3,.grid2,.plans,.servicesList,.articleGrid,.contactGrid{ gap: 12px; }
-  .tile{ padding: 14px; border-radius: 18px; }
-  .tile h3{ margin: 0 0 6px; font-size: 16px; }
-  .tile p{ font-size: 14.5px; line-height: 1.55; }
 
-  /* Banner más bajito */
-  .slides{ min-height: 360px; }
-  .bannerContent{ padding: 22px; }
-  .bannerContent h1{ font-size: 32px !important; margin: 10px 0 10px; }
-  .bannerContent p{ margin: 0 0 14px; font-size: 15px; line-height: 1.55; }
+  /* Formulario: más compacto */
+  .contactCardLight{ padding: 16px; }
+  .field{ gap: 6px; margin-top: 10px; }
+  input, select, textarea{ padding: 10px 12px; border-radius: 14px; font-size: 14.5px; }
+  textarea{ min-height: 84px; }
 
-  /* Botones más compactos */
-  .btn{ padding: 11px 14px; font-size: 14px; }
-
-  /* CTA flotante: que no estorbe y sea más pequeño */
-  body{ padding-bottom: 96px; }
-  .float{ right: 10px; bottom: 10px; }
-  .float .btn{ padding: 10px 12px; font-size: 13.5px; }
+  /* CTA flotante: que NO tape y sea más discreto (barra abajo) */
+  body{ padding-bottom: 110px; }
+  .float{ left: 12px; right: 12px; bottom: 12px; }
+  .float .btn{ width: 100%; justify-content: center; padding: 11px 14px; font-size: 14px; border-radius: 16px; }
 }
 
 
