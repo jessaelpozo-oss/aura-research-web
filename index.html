@@ -356,6 +356,44 @@ img, video { max-width: 100%; height: auto; display: block; }
   .btns, .nav-links { flex-wrap: wrap !important; }
 }
 
+/* ===== Compact mobile (más junto / menos espacio) ===== */
+@media (max-width: 560px){
+
+  /* Tipografía más compacta */
+  body{ font-size: 15px; }
+  p{ line-height: 1.55 !important; }
+  
+  /* Menos espacios verticales generales */
+  section{ margin-top: 12px; }
+  .wrap{ padding: 0 12px 96px; } /* menos padding y aún deja espacio por el botón flotante */
+  
+  /* Secciones: reduce mucho el “aire” */
+  .sectionInner{ padding: 16px 14px; }
+  .section h2{ margin: 0 0 8px; font-size: 22px; }
+  .lead{ margin: 0 0 14px; font-size: 15px; line-height: 1.55; }
+
+  /* Grids y tarjetas: menos separación */
+  .grid3,.grid2,.plans,.servicesList,.articleGrid,.contactGrid{ gap: 12px; }
+  .tile{ padding: 14px; border-radius: 18px; }
+  .tile h3{ margin: 0 0 6px; font-size: 16px; }
+  .tile p{ font-size: 14.5px; line-height: 1.55; }
+
+  /* Banner más bajito */
+  .slides{ min-height: 360px; }
+  .bannerContent{ padding: 22px; }
+  .bannerContent h1{ font-size: 32px !important; margin: 10px 0 10px; }
+  .bannerContent p{ margin: 0 0 14px; font-size: 15px; line-height: 1.55; }
+
+  /* Botones más compactos */
+  .btn{ padding: 11px 14px; font-size: 14px; }
+
+  /* CTA flotante: que no estorbe y sea más pequeño */
+  body{ padding-bottom: 96px; }
+  .float{ right: 10px; bottom: 10px; }
+  .float .btn{ padding: 10px 12px; font-size: 13.5px; }
+}
+
+
 	
   </style>
 </head>
