@@ -649,13 +649,6 @@ textarea{ min-height:96px; resize:vertical; }
   }
 }
 
-/* 4) BOTÓN FLOTANTE: que NO tape contenido + safe area */
-.float{
-  width: min(520px, calc(100% - 24px));
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(12px + env(safe-area-inset-bottom));
-}
 
 body{
   padding-bottom: calc(150px + env(safe-area-inset-bottom));
@@ -663,6 +656,101 @@ body{
 
 .wrap{
   padding-bottom: calc(180px + env(safe-area-inset-bottom));
+}
+
+/* ===== FIX BOTÓN WHATSAPP EN SECCIÓN "NO ESTÁS ATRASADO" ===== */
+
+/* Contenedor del bloque donde está el botón */
+.no-atrasado,
+.structure-section,
+.section-estructura {
+  position: relative;
+}
+
+/* Botón WhatsApp */
+.no-atrasado .btn-whatsapp,
+.structure-section .btn-whatsapp,
+.section-estructura .btn-whatsapp,
+.no-atrasado a[href*="whatsapp"],
+.structure-section a[href*="whatsapp"] {
+  position: absolute;
+  right: 24px;     /* esquina derecha */
+  bottom: 24px;    /* un poco separado del borde */
+  z-index: 3;
+}
+
+/* ===========================
+   FIX: Botones WhatsApp (Contacto)
+   Evita que se monten sobre el form
+=========================== */
+#ctaSend, #ctaQuick{
+  position: static !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+}
+
+/* Que el botón del formulario se vea bien */
+#ctaSend{
+  display: inline-flex !important;
+  width: 100% !important;
+  justify-content: center !important;
+  margin-top: 6px !important;
+}
+
+/* Botón de la tarjeta derecha (PC) */
+#ctaQuick{
+  display: inline-flex !important;
+  min-width: 210px;
+}
+
+/* ===========================
+   POSICIÓN del WhatsApp en GALERÍA (PC)
+   Solo dentro de la foto de Andrew (g3)
+=========================== */
+#galeria .photoCard:has(#g3){
+  position: relative;
+}
+#galeria .photoCard:has(#g3) a.btn.cta{
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 4;
+}
+
+/* En móvil: que NO flote, que se alinee normal */
+@media (max-width: 768px){
+  #galeria .photoCard:has(#g3) a.btn.cta{
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+/* ✅ FIX DEFINITIVO: WhatsApp flotante bien en PC y móvil */
+
+/* PC / Tablet: esquina inferior derecha */
+@media (min-width: 561px){
+  .float{
+    left: auto !important;
+    transform: none !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    width: auto !important;
+  }
+}
+
+/* Móvil: ancho completo abajo (como lo querías) */
+@media (max-width: 560px){
+  .float{
+    left: 12px !important;
+    right: 12px !important;
+    transform: none !important;
+    width: auto !important;
+    bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  }
 }
 
 
