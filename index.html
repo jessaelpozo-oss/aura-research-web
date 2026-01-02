@@ -386,6 +386,378 @@ img, video { max-width: 100%; height: auto; display: block; }
   .float .btn{ width: 100%; justify-content: center; padding: 11px 14px; font-size: 14px; border-radius: 16px; }
 }
 
+/* =========================================================
+   AURA • MOBILE/TABLET COMPACT PACK (pegar al FINAL del <style>)
+   Objetivo: más información visible, menos “aire” en móvil/tablet
+========================================================= */
+
+/* --- 1) Tipografía y radios fluidos (mejor densidad) --- */
+@media (max-width: 980px){
+  :root{
+    --r-xl:24px;
+    --r-lg:20px;
+    --r-md:16px;
+
+    --fz:16px;
+    --fz-lg:17px;
+    --fz-sm:14px;
+  }
+}
+
+/* --- 2) Header más compacto + nav scrolleable (no 2 filas enormes) --- */
+@media (max-width: 980px){
+  .topbar{ padding:10px 12px; } /* antes 14/20 */
+
+  header{
+    border-radius:20px;
+    padding:10px 12px;
+    gap:10px;
+  }
+
+  .logo{ width:110px; height:70px; border-radius:18px; }
+  .logoImg{ padding:4px; }
+
+  nav{
+    gap:6px;
+    flex-wrap:nowrap;          /* NO saltos de línea */
+    overflow-x:auto;           /* scroll horizontal */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width:none;
+    padding-bottom:2px;
+    max-width: 62vw;           /* evita que empuje todo */
+  }
+  nav::-webkit-scrollbar{ display:none; }
+
+  .navlink{
+    font-size:13px;
+    padding:9px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .btn{
+    padding:10px 12px;
+    font-size:13px;
+    gap:8px;
+  }
+}
+
+/* --- 3) Tablet: 2 columnas (más info por pantalla, menos scroll) --- */
+@media (max-width: 1100px) and (min-width: 561px){
+  .grid3{ grid-template-columns:repeat(2, 1fr) !important; }
+  .plans{ grid-template-columns:repeat(2, 1fr) !important; }
+  .servicesList{ grid-template-columns:repeat(2, 1fr) !important; }
+
+  /* Contacto en 2 columnas en tablet (ya no 1 col) */
+  .contactGrid{ grid-template-columns:1fr 1fr !important; }
+
+  /* Artículo: una columna en tablet para no apretar demasiado */
+  .articleGrid{ grid-template-columns:1fr !important; }
+}
+
+/* --- 4) Mobile: ultra compacto (más contenido visible) --- */
+@media (max-width: 560px){
+  /* Layout general */
+  .wrap{ padding:0 12px 96px; }   /* menos aire */
+  section{ margin-top:12px; }
+
+  .section{ border-radius:22px; }
+  .sectionInner{ padding:16px 14px; } /* antes 46px */
+
+  .lead{
+    font-size:15px;
+    line-height:1.55;
+    margin:0 0 16px;
+    max-width:100%;
+  }
+
+  /* Banner: el principal problema */
+  .banner{ border-radius:22px; }
+  .slides{ min-height:360px; }         /* antes 520 */
+  .bannerContent{ padding:18px 16px; max-width:100%; }
+
+  .kicker{
+    font-size:12.5px;
+    padding:8px 10px;
+    gap:8px;
+  }
+
+  .bannerContent h1{
+    margin:12px 0 10px;
+    font-size: clamp(26px, 7.2vw, 34px);
+    line-height:1.08;
+  }
+
+  .bannerContent p{
+    font-size:15px;
+    line-height:1.55;
+    margin:0 0 14px;
+    max-width: 100%;
+  }
+
+  /* Botones del banner: grilla compacta */
+  .bannerActions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .bannerActions .btn{
+    width:100%;
+    justify-content:center;
+    padding:11px 12px;
+    border-radius:16px;
+    font-size:13.5px;
+  }
+  .bannerActions .btn.cta{ grid-column:1 / -1; } /* CTA ocupa toda la fila */
+
+  /* Dots del carrusel: más pegados */
+  .bannerControls{
+    left:16px;
+    bottom:14px;
+    gap:8px;
+  }
+  .dot{ width:9px; height:9px; }
+
+  /* Cards / tiles más densas */
+  .grid3,.grid2,.plans,.servicesList,.articleGrid,.contactGrid{ gap:12px; }
+  .tile{
+    padding:14px;
+    border-radius:18px;
+  }
+  .tile h3{ margin:0 0 8px; font-size:16px; }
+  .tile p{ font-size:14.5px; line-height:1.55; }
+
+  /* Estiliza UL dentro de tiles (menos margen default) */
+  .tile ul{
+    margin:8px 0 0;
+    padding-left:18px;
+    font-size:14.5px;
+    line-height:1.55;
+  }
+
+  /* Photo cards: menos altura */
+  .photoCard{ min-height:210px; border-radius:22px; }
+  .photoCard .caption{ left:14px; right:14px; bottom:12px; }
+  .photoCard .caption b{ font-size:15px; }
+  .photoCard .caption span{ font-size:12.8px; line-height:1.45; }
+
+  /* Paper image: menos alto */
+  .paperImage{ min-height:240px; border-radius:22px; }
+
+  /* Formularios: evita zoom en iOS y compacta */
+  input, select, textarea{ font-size:16px; } /* iOS no hace zoom */
+  .contactCardLight{ padding:16px; border-radius:22px; }
+  .field{ gap:6px; margin-top:10px; }
+  input, select, textarea{ padding:10px 12px; border-radius:14px; }
+  textarea{ min-height:84px; }
+
+  /* CTA flotante: barra inferior compacta */
+  body{ padding-bottom:92px; }
+  .float{ left:12px; right:12px; bottom:12px; }
+  .float .btn{
+    width:100%;
+    justify-content:center;
+    padding:12px 14px;
+    font-size:14px;
+    border-radius:16px;
+  }
+
+  /* En móvil: oculta un botón duplicado del header (ahorra altura visual) */
+  nav .btn:not(.cta){ display:none; } /* deja solo "Solicitar info" */
+}
+
+/* --- 5) Mobile pequeño: aún más compacto --- */
+@media (max-width: 390px){
+  .slides{ min-height:330px; }
+  .bannerActions{ grid-template-columns:1fr; }
+  .bannerActions .btn.cta{ grid-column:auto; }
+  nav{ max-width: 58vw; }
+}
+
+/* =========================================================
+   AURA • COMPACT MODE (GLOBAL)
+   Objetivo: más info visible, menos “aire” en móvil/tablet
+========================================================= */
+
+/* --------- 1) Espaciados y tipografía más densos --------- */
+@media (max-width: 768px){
+  section{ margin-top: 12px !important; }
+  .sectionInner{ padding: 16px 14px !important; }
+  .section h2{ font-size: 22px !important; margin: 0 0 8px !important; }
+  .lead{ font-size: 15px !important; line-height: 1.55 !important; margin: 0 0 14px !important; }
+
+  .tile{ padding: 14px !important; border-radius: 18px !important; }
+  .tile h3{ font-size: 16px !important; margin: 0 0 8px !important; }
+  .tile p, .tile li{
+    font-size: 14.5px !important;
+    line-height: 1.5 !important;
+  }
+  .tile ul{ margin: 8px 0 0 !important; padding-left: 18px !important; }
+}
+
+/* --------- 2) GRIDS: 2 columnas en móvil, 3 en móvil grande --------- */
+@media (max-width: 560px){
+  /* Galería (3 cards) + Turnitin (3 cards) */
+  #galeria .grid3,
+  #turnitin .grid3{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 10px !important;
+  }
+
+  /* Servicios: 2 columnas */
+  #servicios .servicesList{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 10px !important;
+  }
+
+  /* Planes: 2 columnas */
+  #planes .plans{
+    grid-template-columns: repeat(
+
+/* =========================================================
+   FB-MOBILE PACK v2 (super comprimido + planes en 2 columnas)
+   Pegar AL FINAL del <style>
+========================================================= */
+
+/* 0) Por si antes forzaste 1 columna en pantallas pequeñas */
+@media (max-width: 390px){
+  #planes .plans{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  #servicios .servicesList{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+}
+
+/* 1) Banner aún más compacto (para que “entre todo” a primera vista) */
+@media (max-width: 560px){
+  .slides{ min-height: 300px !important; }          /* baja más el hero */
+  .bannerContent{ padding: 16px 14px !important; }
+  .kicker{ font-size: 12px !important; padding: 7px 10px !important; }
+
+  /* texto del banner en preview (2 líneas) */
+  .bannerContent p{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* deja solo CTA principal (tipo Facebook) */
+  .bannerActions{ grid-template-columns: 1fr !important; }
+  .bannerActions .btn.ghost{ display:none !important; }
+}
+
+/* 2) PLANES AURA: 2 columnas SIEMPRE en móvil + cards “mini” */
+@media (max-width: 560px){
+  #planes .plans{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 10px !important;
+  }
+
+  #planes .plan{
+    padding: 12px !important;
+    border-radius: 18px !important;
+  }
+
+  #planes .tag{
+    padding: 7px 9px !important;
+    font-size: 11.5px !important;
+  }
+
+  #planes .plan h3{
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    margin: 10px 0 8px !important;
+  }
+
+  /* oculta el párrafo largo del plan (se vuelve “preview”) */
+  #planes .plan p{ display:none !important; }
+
+  /* lista más corta (muestra 3 items y listo) */
+  #planes .plan ul{
+    margin: 6px 0 10px !important;
+    padding-left: 16px !important;
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+  }
+  #planes .plan ul li:nth-child(n+4){ display:none !important; }
+  #planes .plan ul::after{
+    content:"… y más" !important;
+    display:block !important;
+    margin-top: 4px !important;
+    font-size: 12px !important;
+    color: rgba(244,247,255,.72) !important;
+  }
+
+  /* deja solo 1 botón para no alargar la tarjeta */
+  #planes .ctaRow .btn:not(.cta){ display:none !important; }
+  #planes .ctaRow .btn.cta{
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+    font-size: 13.5px !important;
+  }
+}
+
+/* 3) Servicios: 2 columnas + compacta texto */
+@media (max-width: 560px){
+  #servicios .servicesList{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 10px !important;
+  }
+
+  /* preview de párrafos largos dentro de tiles */
+  #servicios .tile p{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+}
+
+/* 4) Artículo: ultra compacto + insights en 2 columnas */
+@media (max-width: 560px){
+  #articulo .articleCard{
+    padding: 14px !important;
+    border-radius: 18px !important;
+  }
+
+  #articulo .articleTitle{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  #articulo .abstract{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* tus insights (k1/k2) lado a lado */
+  #articulo .articleCard .grid3{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 10px !important;
+  }
+
+  /* imagen del paper más bajita */
+  #articulo .paperImage{
+    min-height: unset !important;
+    aspect-ratio: 16 / 10 !important;
+    border-radius: 18px !important;
+  }
+}
+
+/* 5) Filosofía/Objetivo (muy largos): preview tipo feed */
+@media (max-width: 560px){
+  #galeria .tile p{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 6 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+}
 
 	
   </style>
