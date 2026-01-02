@@ -759,6 +759,163 @@ img, video { max-width: 100%; height: auto; display: block; }
   }
 }
 
+/* =========================================================
+   FB-MOBILE: menos scroll, previews, y planes comparables
+   Pegar AL FINAL del <style>
+========================================================= */
+
+/* --------- Densidad general en móvil --------- */
+@media (max-width: 560px){
+  .wrap{ padding: 0 12px 96px !important; }
+  section{ margin-top: 12px !important; }
+  .sectionInner{ padding: 14px 12px !important; }
+
+  .section h2{ font-size: 20px !important; margin: 0 0 8px !important; }
+  .lead{ font-size: 14.5px !important; line-height: 1.45 !important; margin: 0 0 12px !important; }
+
+  .tile{ padding: 13px !important; border-radius: 18px !important; }
+  .tile h3{ font-size: 15.5px !important; margin: 0 0 7px !important; }
+  .tile p, .tile li{ font-size: 14.2px !important; line-height: 1.42 !important; }
+  .tile ul{ margin: 8px 0 0 !important; padding-left: 16px !important; }
+}
+
+/* --------- PREVIEWS (recorta textos largos) --------- */
+@media (max-width: 560px){
+
+  /* Artículo */
+  #articulo .articleTitle{
+    font-size: 18px !important;
+    line-height: 1.15 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  #articulo .abstract{
+    font-size: 14.3px !important;
+    line-height: 1.42 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important; /* antes era larguísimo */
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  #articulo .citation{
+    font-size: 13.2px !important;
+    line-height: 1.35 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  /* Filosofía + Objetivo (solo preview, estilo feed) */
+  #galeria .tile p{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 7 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  /* Servicios: preview en párrafos */
+  #servicios .tile p{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+}
+
+/* --------- Imagen del artículo más bajita --------- */
+@media (max-width: 560px){
+  #articulo .paperImage{
+    min-height: unset !important;
+    aspect-ratio: 16 / 10 !important;
+    border-radius: 18px !important;
+  }
+}
+
+/* =========================================================
+   PLANES AURA: COMPARABLES (2 columnas móvil / 3 en grande)
+========================================================= */
+
+/* MÓVIL: 2 columnas SI O SI */
+@media (max-width: 560px){
+  #planes .plans{
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    gap: 10px !important;
+  }
+
+  #planes .plan{
+    padding: 12px !important;
+    border-radius: 18px !important;
+  }
+
+  #planes .tag{
+    padding: 7px 9px !important;
+    font-size: 11.5px !important;
+  }
+
+  #planes .plan h3{
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    margin: 10px 0 6px !important;
+  }
+
+  /* quita el párrafo largo del plan (modo “feed”) */
+  #planes .plan p{ display:none !important; }
+
+  /* bullets cortos (para comparar rápido) */
+  #planes .plan ul{
+    margin: 6px 0 10px !important;
+    padding-left: 16px !important;
+    font-size: 13.4px !important;
+    line-height: 1.35 !important;
+  }
+  #planes .plan ul li:nth-child(n+4){ display:none !important; } /* solo 3 bullets */
+  #planes .plan ul::after{
+    content:"… y más" !important;
+    display:block !important;
+    margin-top: 4px !important;
+    font-size: 12px !important;
+    color: rgba(244,247,255,.72) !important;
+  }
+
+  /* deja SOLO un botón (para que la tarjeta no crezca) */
+  #planes .ctaRow .btn:not(.cta){ display:none !important; }
+  #planes .ctaRow{ display:block !important; }
+  #planes .ctaRow .btn.cta{
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 12px !important;
+    font-size: 13.5px !important;
+    border-radius: 14px !important;
+  }
+}
+
+/* MÓVIL GRANDE / TABLET: 3 columnas para comparar mejor */
+@media (min-width: 480px) and (max-width: 768px){
+  #planes .plans{
+    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+    gap: 12px !important;
+  }
+}
+
+/* EXTRA: si tu celular es MUY angosto (ej 320px), mejor carrusel horizontal tipo FB */
+@media (max-width: 360px){
+  #planes .plans{
+    display:flex !important;
+    gap: 10px !important;
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px !important;
+  }
+  #planes .plan{
+    min-width: 78vw !important;
+    scroll-snap-align: start;
+  }
+}
+
 	
   </style>
 </head>
