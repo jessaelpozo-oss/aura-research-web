@@ -11,490 +11,466 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <style>
-  
-  /* Base responsive */
+<style>
+/* =========================
+   AURA Research — CSS LIMPIO
+   Mobile first + Feed mode
+========================= */
+
+/* Reset */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { width: 100%; overflow-x: hidden; }
 img, video { max-width: 100%; height: auto; display: block; }
+html { scroll-behavior: smooth; }
+a { color: inherit; text-decoration: none; }
 
-/* Contenedor típico */
-.container{
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px; /* respira en móvil */
+/* Variables */
+:root{
+  --aura:#148B75;
+  --aura2:#1FAF96;
+  --ink:#0A1220;
+  --muted:#51627D;
+  --bg:#F5F7FB;
+  --line:rgba(10,18,32,.12);
+  --shadow:0 22px 60px rgba(10,18,32,.12);
+
+  --d-text:#F4F7FF;
+  --d-muted:rgba(244,247,255,.76);
+  --d-line:rgba(255,255,255,.14);
+  --d-card:rgba(255,255,255,.08);
+
+  --max:1240px;
+  --r-xl:32px;
+  --r-lg:26px;
+  --r-md:18px;
+
+  --fz:17px;
+  --fz-sm:14.5px;
+  --fz-lg:19px;
 }
 
-    :root{
-      --aura:#148B75;
-      --aura2:#1FAF96;
-      --ink:#0A1220;
-      --muted:#51627D;
-      --bg:#F5F7FB;
-      --line:rgba(10,18,32,.12);
-      --shadow:0 22px 60px rgba(10,18,32,.12);
-
-      --d-text:#F4F7FF;
-      --d-muted:rgba(244,247,255,.76);
-      --d-line:rgba(255,255,255,.14);
-      --d-card:rgba(255,255,255,.08);
-
-      --max:1240px;
-      --r-xl:32px;
-      --r-lg:26px;
-      --r-md:18px;
-
-      --fz:17px;
-      --fz-sm:14.5px;
-      --fz-lg:19px;
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      font-size:var(--fz);
-      color:var(--ink);
-      background:
-        radial-gradient(900px 520px at 8% 0%, rgba(31,175,150,.10), transparent 60%),
-        radial-gradient(900px 520px at 95% 10%, rgba(10,18,32,.06), transparent 60%),
-        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 70%, #FFFFFF 100%);
-      overflow-x:hidden;
-    }
-
-    a{color:inherit; text-decoration:none}
-
-    /* ===== Topbar fija (arriba del todo) ===== */
-		   .topbar{
-		  position:relative;  /* ya no se queda pegada */
-		  padding:14px 20px;
-		  pointer-events:none;
-		}
-
-    header{
-      pointer-events:auto;
-      width:min(var(--max), 100%);
-      margin:0 auto;
-      background:rgba(10,18,32,.94);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:28px;
-      backdrop-filter:blur(10px);
-      box-shadow:0 18px 50px rgba(0,0,0,.22);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:16px 18px;
-      transition: background .25s ease, box-shadow .25s ease;
-    }
-
-    header.scrolled{ background:rgba(10,18,32,.975); box-shadow:0 18px 60px rgba(0,0,0,.28); }
-
-    /* Brand: SOLO logo + espacio grande */
-    .brand{display:flex; align-items:center; gap:14px;}
-	
-	
-    .logo{
-	  width: 140px;
-	  height: 90px;
-	  border-radius: 26px;
-	  border: 1px solid rgba(255,255,255,.16);
-	  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
-	  display: grid;
-	  place-items: center;
-	  box-shadow: 0 16px 32px rgba(20,139,117,.18);
-	  overflow: hidden;
-	}
-
-	
-    .logo span{font-weight:900; font-size:12px; letter-spacing:.22em; color:rgba(244,247,255,.75)}
-
-
-	.logoImg{
-	  width: 100%;
-	  height: 100%;
-	  object-fit: contain;
-	  padding: 6px;
-	  display: block;
-	}
-
-
-    nav{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;}
-
-    .navlink{font-size:14.5px; color:var(--d-muted); padding:12px 14px; border-radius:999px; transition:background .2s ease, color .2s ease;}
-    .navlink:hover{color:var(--d-text); background:rgba(255,255,255,.08)}
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:13px 18px;
-      border-radius:999px;
-      font-weight:800;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.08);
-      color:var(--d-text);
-      transition: transform .2s ease, background .2s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.12)}
-
-    .btn.cta{background:linear-gradient(135deg, var(--aura), var(--aura2)); border-color:rgba(20,139,117,.60); color:#fff; box-shadow:0 18px 44px rgba(20,139,117,.28)}
-    .btn.ghost{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18)}
-
-    /* Spacer para no tapar contenido */
-    .spacer{height:128px;}
-
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px 140px;}
-
-    /* ===== Banner (carrusel) ===== */
-    .banner{margin-top:18px; border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow);}
-    .slides{position:relative; min-height:520px; background:#0A1220; overflow:hidden;}
-    .slide{position:absolute; inset:0; opacity:0; transform:scale(1.02); transition:opacity .8s ease, transform 1s ease; background-size:cover; background-position:center;}
-    .slide.active{opacity:1; transform:scale(1)}
-
-    .slideOverlay{position:absolute; inset:0;
-      background:
-        linear-gradient(90deg, rgba(10,18,32,.92) 0%, rgba(10,18,32,.55) 50%, rgba(10,18,32,.18) 100%),
-        radial-gradient(760px 560px at 18% 30%, rgba(31,175,150,.18), transparent 60%);
-    }
-
-    .bannerContent{position:relative; padding:56px; max-width:880px;}
-    .kicker{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.20); background:rgba(255,255,255,.08); color:rgba(255,255,255,.92); font-size:14px;}
-    .bannerContent h1{margin:16px 0 14px; font-size:60px; line-height:1.02; letter-spacing:-.02em; color:#fff;}
-    .bannerContent p{margin:0 0 22px; font-size:var(--fz-lg); line-height:1.9; color:rgba(255,255,255,.88); max-width:68ch;}
-    .bannerActions{display:flex; gap:14px; flex-wrap:wrap;}
-
-    .bannerControls{position:absolute; left:46px; bottom:28px; display:flex; gap:10px; align-items:center;}
-    .dot{width:11px; height:11px; border-radius:999px; border:1px solid rgba(255,255,255,.45); background:rgba(255,255,255,.22); cursor:pointer;}
-    .dot.active{background:rgba(20,139,117,1); border-color:rgba(20,139,117,1);}
-
-    /* ===== Sections ===== */
-    section{margin-top:22px;}
-    .section{border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow);}
-    .sectionInner{padding:46px; border:1px solid var(--line); background:#fff;}
-
-    .sectionDark .sectionInner{background:linear-gradient(180deg, #0A1220 0%, #111B30 100%); color:var(--d-text); border-color:rgba(255,255,255,.12)}
-
-    .section h2{margin:0 0 14px; font-size:30px;}
-    .lead{margin:0 0 30px; font-size:18px; line-height:1.9; color:#4A5A73; max-width:92ch;}
-    .sectionDark .lead{color:var(--d-muted)}
-
-    .grid3{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;}
-    .grid2{display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch;}
-
-    .tile{border-radius:26px; padding:24px; border:1px solid rgba(10,18,32,.10); background:rgba(10,18,32,.02)}
-    .tile h3{margin:0 0 10px; font-size:18px}
-    .tile p{margin:0; font-size:15.5px; line-height:1.8; color:#5B6C86}
-
-    .sectionDark .tile{background:var(--d-card); border-color:rgba(255,255,255,.14)}
-    .sectionDark .tile p{color:rgba(244,247,255,.80)}
-
-    /* ===== Galería ===== */
-    .photoCard{border-radius:28px; overflow:hidden; border:1px solid rgba(10,18,32,.10); background:#fff; min-height:290px; position:relative; box-shadow:0 16px 40px rgba(10,18,32,.10)}
-    .photoCard .img{position:absolute; inset:0; background-size:cover; background-position:center; filter:saturate(1.05) contrast(1.02)}
-    .photoCard .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,18,32,.00) 0%, rgba(10,18,32,.68) 90%)}
-    .photoCard .caption{position:absolute; left:20px; right:20px; bottom:18px; color:#fff}
-    .photoCard .caption b{display:block; font-size:16px}
-    .photoCard .caption span{display:block; margin-top:6px; font-size:13.5px; color:rgba(255,255,255,.82); line-height:1.6}
-
-    /* ===== Planes (progresión de diseño) ===== */
-    .plans{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
-
-    .plan{border-radius:28px; padding:26px; position:relative; overflow:hidden;}
-    .plan > *{position:relative; z-index:1}
-
-    /* ESENCIAL: básico, limpio */
-    .plan.essential{
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);
-      box-shadow:0 12px 34px rgba(0,0,0,.16);
-    }
-
-    /* AVANZADO: más diseño (banda lateral) */
-    .plan.advanced{
-      border:1px solid rgba(31,175,150,.30);
-      background:linear-gradient(180deg, rgba(31,175,150,.16), rgba(255,255,255,.06));
-      box-shadow:0 14px 38px rgba(0,0,0,.18);
-    }
-    .plan.advanced::before{
-      content:"";
-      position:absolute; left:-60px; top:-60px;
-      width:180px; height:180px;
-      background:radial-gradient(circle, rgba(31,175,150,.35), transparent 65%);
-      filter: blur(2px);
-    }
-
-    /* ÉLITE: top diseño (shine + borde glow) */
-    .plan.elite{
-      border:1px solid rgba(31,175,150,.40);
-      background:
-        radial-gradient(700px 320px at 18% 0%, rgba(31,175,150,.28), transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      box-shadow:0 18px 48px rgba(0,0,0,.22);
-    }
-    .plan.elite::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.16) 35%, transparent 70%);
-      transform: translateX(-40%) rotate(8deg);
-      opacity:.45;
-      pointer-events:none;
-    }
-
-    .tag{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; font-weight:900; font-size:13px; letter-spacing:.02em; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); color:var(--d-text)}
-    .plan.elite .tag{background:linear-gradient(135deg, var(--aura), var(--aura2)); border-color:rgba(31,175,150,.45)}
-
-    .plan h3{margin:14px 0 10px; font-size:20px; color:var(--d-text)}
-    .plan p{margin:0 0 14px; font-size:15.5px; line-height:1.9; color:var(--d-muted)}
-    .plan ul{margin:0 0 18px; padding-left:18px; color:rgba(244,247,255,.84); font-size:15.5px; line-height:1.9}
-
-    .ctaRow{display:flex; gap:12px; flex-wrap:wrap}
-
-    /* Servicios */
-    .servicesList{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px}
-
-    /* Artículo */
-    .articleGrid{display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch}
-
-    .articleCard{border-radius:28px; padding:26px; border:1px solid rgba(10,18,32,.10); background:#fff}
-    .sectionDark .articleCard{border-color:rgba(255,255,255,.14); background:var(--d-card)}
-
-    .badge{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; font-weight:900; font-size:13px; background:rgba(31,175,150,.12); color:var(--aura)}
-
-    .articleTitle{margin:14px 0 10px; font-size:22px}
-    .abstract{margin:0 0 14px; font-size:16px; line-height:1.9; color:#5B6C86}
-    .citation{font-size:14.5px; line-height:1.7; color:#6A7C96}
-
-    .paperImage{border-radius:24px; overflow:hidden; border:1px solid rgba(10,18,32,.10); min-height: 340px; position:relative; box-shadow:0 16px 40px rgba(10,18,32,.10)}
-    .paperImage .img{position:absolute; inset:0; background-size:cover; background-position:center}
-    .paperImage .overlay{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,18,32,.10) 0%, rgba(10,18,32,.74) 92%)}
-    .paperImage .caption{position:absolute; left:20px; right:20px; bottom:18px; color:#fff}
-    .paperImage .caption b{display:block; font-size:16px}
-    .paperImage .caption span{display:block; margin-top:6px; font-size:13.5px; color:rgba(255,255,255,.84); line-height:1.6}
-
-    /* Contacto (CLARO, no oscuro) */
-    .contactGrid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
-    .contactCardLight{border-radius:28px; padding:26px; border:1px solid rgba(10,18,32,.10); background:#fff; box-shadow:0 16px 40px rgba(10,18,32,.10)}
-
-    .field{display:grid; gap:8px; margin-top:12px}
-    label{font-size:13px; color:#6A7C96}
-
-    input, select, textarea{
-      width:100%;
-      border:1px solid rgba(10,18,32,.14);
-      background:#FFFFFF;
-      color:var(--ink);
-      padding:13px 14px;
-      border-radius:16px;
-      font-size:15px;
-      outline:none;
-      transition:border-color .15s ease, box-shadow .15s ease;
-    }
-
-    input:focus, select:focus, textarea:focus{
-      border-color:rgba(31,175,150,.70);
-      box-shadow:0 0 0 5px rgba(31,175,150,.16);
-    }
-
-    textarea{min-height:96px; resize:vertical}
-
-    .noteLight{margin-top:14px; padding:14px; border-radius:18px; border:1px solid rgba(31,175,150,.26); background:rgba(31,175,150,.08); color:#0F5E50; font-size:14px; line-height:1.8}
-
-    /* Credenciales + copyright más grandes */
-    .credBar{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .chip{padding:10px 12px; border-radius:999px; border:1px solid rgba(10,18,32,.12); background:rgba(10,18,32,.02); font-weight:800; font-size:14px; color:#0A1220}
-
-    .copyright{margin-top:18px; font-size:15px; color:#40506A; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
-
-    /* Reveal */
-    .reveal{opacity:0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease}
-    .reveal.show{opacity:1; transform: translateY(0)}
-
-    /* Floating CTA */
-    .float{position:fixed; right:16px; bottom:16px; z-index:140}
-
-    @media(max-width:1100px){
-      .grid2,.grid3,.plans,.servicesList,.articleGrid,.contactGrid{grid-template-columns:1fr}
-      .bannerContent{padding:40px}
-      .bannerContent h1{font-size:44px}
-      .spacer{height:140px}
-      nav{gap:8px}
-      .logo{width:120px; height:80px}
-    }
-
-    /* ===== Mobile fixes ===== */
-	@media (max-width: 560px){
-	  /* Más espacio útil para leer */
-	  .wrap{ padding: 0 14px 120px; }            /* deja aire abajo por el botón flotante */
-	  .sectionInner{ padding: 22px 18px; }       /* antes 46px: en móvil era demasiado */
-	  .lead{ font-size: 16px; line-height: 1.7; max-width: 100%; }
-	  .tile{ padding: 18px; }
-
-	  /* Evita que el CTA tape el texto */
-	  body{ padding-bottom: 110px; }            /* “zona segura” para el botón */
-	  .float{ right: 12px; bottom: 12px; }      /* un poco más pegado a borde */
-	  .float .btn{ padding: 12px 14px; font-size: 14px; }
-	}
-
-	
-	@media (max-width: 768px){
-  /* si tienes secciones en filas, pásalas a columna */
-  .row, .hero, .about, .services, .contact {
-    flex-direction: column !important;
-    align-items: stretch !important;
-  }
-
-  /* textos que suelen romper */
-  h1 { font-size: 32px !important; line-height: 1.15; }
-  h2 { font-size: 24px !important; }
-  p  { font-size: 16px !important; }
-
-  /* botones/menús que se desbordan */
-  .btns, .nav-links { flex-wrap: wrap !important; }
+/* Body */
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size:var(--fz);
+  color:var(--ink);
+  background:
+    radial-gradient(900px 520px at 8% 0%, rgba(31,175,150,.10), transparent 60%),
+    radial-gradient(900px 520px at 95% 10%, rgba(10,18,32,.06), transparent 60%),
+    linear-gradient(180deg, #FFFFFF 0%, var(--bg) 70%, #FFFFFF 100%);
+  overflow-x:hidden;
 }
 
-
-/* ===== Mobile: más compacto y mejor distribución ===== */
-@media (max-width: 560px){
-
-  /* Quita “aire” y evita que el texto se vuelva angosto */
-  .wrap{ padding: 0 12px 110px; }     /* +110px para que no tape el CTA */
-  section{ margin-top: 12px; }
-
-  .sectionInner{ padding: 16px 14px; } /* antes 46px */
-  .tile{ padding: 14px; border-radius: 18px; } /* antes 24px y 26px */
-
-  /* Tipografía más compacta y legible */
-  h2{ font-size: 22px !important; margin: 0 0 8px !important; }
-  p{ font-size: 15px !important; line-height: 1.55 !important; white-space: normal; }
-
-  /* Reduce separaciones entre tarjetas */
-  .grid3,.grid2,.plans,.servicesList,.articleGrid,.contactGrid{ gap: 12px; }
-
-  /* Formulario: más compacto */
-  .contactCardLight{ padding: 16px; }
-  .field{ gap: 6px; margin-top: 10px; }
-  input, select, textarea{ padding: 10px 12px; border-radius: 14px; font-size: 14.5px; }
-  textarea{ min-height: 84px; }
-
-  /* CTA flotante: que NO tape y sea más discreto (barra abajo) */
-  body{ padding-bottom: 110px; }
-  .float{ left: 12px; right: 12px; bottom: 12px; }
-  .float .btn{ width: 100%; justify-content: center; padding: 11px 14px; font-size: 14px; border-radius: 16px; }
+/* Layout wrapper */
+.wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 20px 140px; /* espacio por CTA flotante */
 }
 
-/* =========================================================
-   AURA • MOBILE/TABLET COMPACT PACK (pegar al FINAL del <style>)
-   Objetivo: más información visible, menos “aire” en móvil/tablet
-========================================================= */
+/* Topbar */
+.topbar{
+  position:relative;
+  padding:14px 20px;
+  pointer-events:none;
+}
+header{
+  pointer-events:auto;
+  width:min(var(--max), 100%);
+  margin:0 auto;
+  background:rgba(10,18,32,.94);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:28px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 18px 50px rgba(0,0,0,.22);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:16px 18px;
+  transition: background .25s ease, box-shadow .25s ease;
+}
+header.scrolled{ background:rgba(10,18,32,.975); box-shadow:0 18px 60px rgba(0,0,0,.28); }
 
-/* --- 1) Tipografía y radios fluidos (mejor densidad) --- */
+.brand{display:flex; align-items:center; gap:14px;}
+.logo{
+  width:140px; height:90px;
+  border-radius:26px;
+  border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  display:grid; place-items:center;
+  box-shadow:0 16px 32px rgba(20,139,117,.18);
+  overflow:hidden;
+}
+.logoImg{ width:100%; height:100%; object-fit:contain; padding:6px; display:block; }
+
+/* Nav */
+nav{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-end;
+}
+.navlink{
+  font-size:14.5px;
+  color:var(--d-muted);
+  padding:12px 14px;
+  border-radius:999px;
+  transition:background .2s ease, color .2s ease;
+}
+.navlink:hover{ color:var(--d-text); background:rgba(255,255,255,.08); }
+
+/* Buttons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:10px;
+  padding:13px 18px;
+  border-radius:999px;
+  font-weight:800;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  color:var(--d-text);
+  transition: transform .2s ease, background .2s ease;
+  white-space:nowrap;
+}
+.btn:hover{ transform: translateY(-1px); background:rgba(255,255,255,.12); }
+.btn.cta{
+  background:linear-gradient(135deg, var(--aura), var(--aura2));
+  border-color:rgba(20,139,117,.60);
+  color:#fff;
+  box-shadow:0 18px 44px rgba(20,139,117,.28);
+}
+.btn.ghost{ background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.18); }
+
+/* Banner */
+.banner{ margin-top:18px; border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow); }
+.slides{ position:relative; min-height:520px; background:#0A1220; overflow:hidden; }
+.slide{
+  position:absolute; inset:0;
+  opacity:0; transform:scale(1.02);
+  transition:opacity .8s ease, transform 1s ease;
+  background-size:cover; background-position:center;
+}
+.slide.active{ opacity:1; transform:scale(1); }
+
+.slideOverlay{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(90deg, rgba(10,18,32,.92) 0%, rgba(10,18,32,.55) 50%, rgba(10,18,32,.18) 100%),
+    radial-gradient(760px 560px at 18% 30%, rgba(31,175,150,.18), transparent 60%);
+}
+.bannerContent{ position:relative; padding:56px; max-width:880px; }
+.kicker{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.08);
+  color:rgba(255,255,255,.92);
+  font-size:14px;
+}
+.bannerContent h1{
+  margin:16px 0 14px;
+  font-size:60px; line-height:1.02;
+  letter-spacing:-.02em;
+  color:#fff;
+}
+.bannerContent p{
+  margin:0 0 22px;
+  font-size:var(--fz-lg);
+  line-height:1.9;
+  color:rgba(255,255,255,.88);
+  max-width:68ch;
+}
+.bannerActions{ display:flex; gap:14px; flex-wrap:wrap; }
+
+.bannerControls{ position:absolute; left:46px; bottom:28px; display:flex; gap:10px; align-items:center; }
+.dot{
+  width:11px; height:11px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(255,255,255,.22);
+  cursor:pointer;
+}
+.dot.active{ background:rgba(20,139,117,1); border-color:rgba(20,139,117,1); }
+
+/* Sections */
+section{ margin-top:22px; }
+.section{ border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow); }
+.sectionInner{ padding:46px; border:1px solid var(--line); background:#fff; }
+
+.sectionDark .sectionInner{
+  background:linear-gradient(180deg, #0A1220 0%, #111B30 100%);
+  color:var(--d-text);
+  border-color:rgba(255,255,255,.12);
+}
+
+.section h2{ margin:0 0 14px; font-size:30px; }
+.lead{ margin:0 0 30px; font-size:18px; line-height:1.9; color:#4A5A73; max-width:92ch; }
+.sectionDark .lead{ color:var(--d-muted); }
+
+/* Grids */
+.grid3{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+.grid2{ display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch; }
+
+/* Tiles */
+.tile{
+  border-radius:26px;
+  padding:24px;
+  border:1px solid rgba(10,18,32,.10);
+  background:rgba(10,18,32,.02);
+}
+.tile h3{ margin:0 0 10px; font-size:18px; }
+.tile p{ margin:0; font-size:15.5px; line-height:1.8; color:#5B6C86; }
+.tile ul{ margin:10px 0 0; padding-left:18px; font-size:15.5px; line-height:1.8; color:#5B6C86; }
+
+.sectionDark .tile{ background:var(--d-card); border-color:rgba(255,255,255,.14); }
+.sectionDark .tile p,
+.sectionDark .tile li{ color:rgba(244,247,255,.80); }
+
+/* Gallery cards */
+.photoCard{
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid rgba(10,18,32,.10);
+  background:#fff;
+  min-height:290px;
+  position:relative;
+  box-shadow:0 16px 40px rgba(10,18,32,.10);
+}
+.photoCard .img{ position:absolute; inset:0; background-size:cover; background-position:center; filter:saturate(1.05) contrast(1.02); }
+.photoCard .overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,18,32,.00) 0%, rgba(10,18,32,.68) 90%); }
+.photoCard .caption{ position:absolute; left:20px; right:20px; bottom:18px; color:#fff; }
+.photoCard .caption b{ display:block; font-size:16px; }
+.photoCard .caption span{ display:block; margin-top:6px; font-size:13.5px; color:rgba(255,255,255,.82); line-height:1.6; }
+
+/* Plans */
+.plans{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+.plan{ border-radius:28px; padding:26px; position:relative; overflow:hidden; }
+.plan > *{ position:relative; z-index:1; }
+
+.plan.essential{
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.06);
+  box-shadow:0 12px 34px rgba(0,0,0,.16);
+}
+.plan.advanced{
+  border:1px solid rgba(31,175,150,.30);
+  background:linear-gradient(180deg, rgba(31,175,150,.16), rgba(255,255,255,.06));
+  box-shadow:0 14px 38px rgba(0,0,0,.18);
+}
+.plan.advanced::before{
+  content:"";
+  position:absolute; left:-60px; top:-60px;
+  width:180px; height:180px;
+  background:radial-gradient(circle, rgba(31,175,150,.35), transparent 65%);
+  filter: blur(2px);
+}
+.plan.elite{
+  border:1px solid rgba(31,175,150,.40);
+  background:
+    radial-gradient(700px 320px at 18% 0%, rgba(31,175,150,.28), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  box-shadow:0 18px 48px rgba(0,0,0,.22);
+}
+.plan.elite::before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.16) 35%, transparent 70%);
+  transform: translateX(-40%) rotate(8deg);
+  opacity:.45;
+  pointer-events:none;
+}
+
+.tag{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:13px;
+  letter-spacing:.02em;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.10);
+  color:var(--d-text);
+}
+.plan.elite .tag{
+  background:linear-gradient(135deg, var(--aura), var(--aura2));
+  border-color:rgba(31,175,150,.45);
+}
+
+.plan h3{ margin:14px 0 10px; font-size:20px; color:var(--d-text); }
+.plan p{ margin:0 0 14px; font-size:15.5px; line-height:1.9; color:var(--d-muted); }
+.plan ul{ margin:0 0 18px; padding-left:18px; color:rgba(244,247,255,.84); font-size:15.5px; line-height:1.9; }
+.ctaRow{ display:flex; gap:12px; flex-wrap:wrap; }
+
+/* Services */
+.servicesList{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+
+/* Article */
+.articleGrid{ display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch; }
+.articleCard{ border-radius:28px; padding:26px; border:1px solid rgba(10,18,32,.10); background:#fff; }
+.sectionDark .articleCard{ border-color:rgba(255,255,255,.14); background:var(--d-card); }
+
+.badge{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:13px;
+  background:rgba(31,175,150,.12);
+  color:var(--aura);
+}
+.articleTitle{ margin:14px 0 10px; font-size:22px; }
+.abstract{ margin:0 0 14px; font-size:16px; line-height:1.9; color:#5B6C86; }
+.citation{ font-size:14.5px; line-height:1.7; color:#6A7C96; }
+
+.paperImage{
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(10,18,32,.10);
+  min-height:340px;
+  position:relative;
+  box-shadow:0 16px 40px rgba(10,18,32,.10);
+}
+.paperImage .img{ position:absolute; inset:0; background-size:cover; background-position:center; }
+.paperImage .overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,18,32,.10) 0%, rgba(10,18,32,.74) 92%); }
+
+/* Contact */
+.contactGrid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.contactCardLight{
+  border-radius:28px;
+  padding:26px;
+  border:1px solid rgba(10,18,32,.10);
+  background:#fff;
+  box-shadow:0 16px 40px rgba(10,18,32,.10);
+}
+.field{ display:grid; gap:8px; margin-top:12px; }
+label{ font-size:13px; color:#6A7C96; }
+
+input, select, textarea{
+  width:100%;
+  border:1px solid rgba(10,18,32,.14);
+  background:#FFFFFF;
+  color:var(--ink);
+  padding:13px 14px;
+  border-radius:16px;
+  font-size:15px;
+  outline:none;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+input:focus, select:focus, textarea:focus{
+  border-color:rgba(31,175,150,.70);
+  box-shadow:0 0 0 5px rgba(31,175,150,.16);
+}
+textarea{ min-height:96px; resize:vertical; }
+
+.noteLight{
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(31,175,150,.26);
+  background:rgba(31,175,150,.08);
+  color:#0F5E50;
+  font-size:14px;
+  line-height:1.8;
+}
+
+.credBar{ margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.chip{
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(10,18,32,.12);
+  background:rgba(10,18,32,.02);
+  font-weight:800;
+  font-size:14px;
+  color:#0A1220;
+}
+.copyright{
+  margin-top:18px;
+  font-size:15px;
+  color:#40506A;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* Reveal */
+.reveal{ opacity:0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.show{ opacity:1; transform: translateY(0); }
+
+/* Floating CTA */
+.float{ position:fixed; right:16px; bottom:16px; z-index:140; }
+
+/* =========================================
+   RESPONSIVE — TABLET / MOBILE (FEED MODE)
+========================================= */
+
+/* Tablet + small screens */
 @media (max-width: 980px){
-  :root{
-    --r-xl:24px;
-    --r-lg:20px;
-    --r-md:16px;
-
-    --fz:16px;
-    --fz-lg:17px;
-    --fz-sm:14px;
-  }
-}
-
-/* --- 2) Header más compacto + nav scrolleable (no 2 filas enormes) --- */
-@media (max-width: 980px){
-  .topbar{ padding:10px 12px; } /* antes 14/20 */
-
-  header{
-    border-radius:20px;
-    padding:10px 12px;
-    gap:10px;
-  }
-
+  /* header compacto + nav horizontal scrolleable */
+  .topbar{ padding:10px 12px; }
+  header{ border-radius:20px; padding:10px 12px; gap:10px; }
   .logo{ width:110px; height:70px; border-radius:18px; }
   .logoImg{ padding:4px; }
 
   nav{
-    gap:6px;
-    flex-wrap:nowrap;          /* NO saltos de línea */
-    overflow-x:auto;           /* scroll horizontal */
-    -webkit-overflow-scrolling: touch;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
+    max-width: 66vw;
     padding-bottom:2px;
-    max-width: 62vw;           /* evita que empuje todo */
+    gap:8px;
   }
   nav::-webkit-scrollbar{ display:none; }
 
-  .navlink{
-    font-size:13px;
-    padding:9px 10px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
-  .btn{
-    padding:10px 12px;
-    font-size:13px;
-    gap:8px;
-  }
+  .navlink{ font-size:13px; padding:9px 10px; }
+  .btn{ padding:10px 12px; font-size:13px; gap:8px; }
+
+  /* grids */
+  .grid2, .articleGrid, .contactGrid{ grid-template-columns:1fr; }
+  .grid3{ grid-template-columns:repeat(2, 1fr); }
+  .servicesList{ grid-template-columns:repeat(2, 1fr); }
+
+  /* banner más bajo */
+  .slides{ min-height:380px; }
+  .bannerContent{ padding:26px; }
+  .bannerContent h1{ font-size:44px; }
 }
 
-/* --- 3) Tablet: 2 columnas (más info por pantalla, menos scroll) --- */
-@media (max-width: 1100px) and (min-width: 561px){
-  .grid3{ grid-template-columns:repeat(2, 1fr) !important; }
-  .plans{ grid-template-columns:repeat(2, 1fr) !important; }
-  .servicesList{ grid-template-columns:repeat(2, 1fr) !important; }
-
-  /* Contacto en 2 columnas en tablet (ya no 1 col) */
-  .contactGrid{ grid-template-columns:1fr 1fr !important; }
-
-  /* Artículo: una columna en tablet para no apretar demasiado */
-  .articleGrid{ grid-template-columns:1fr !important; }
-}
-
-/* --- 4) Mobile: ultra compacto (más contenido visible) --- */
+/* Mobile FEED */
 @media (max-width: 560px){
-  /* Layout general */
-  .wrap{ padding:0 12px 96px; }   /* menos aire */
+  /* densidad general */
+  body{ padding-bottom: 96px; } /* zona segura del CTA flotante */
+  .wrap{ padding:0 12px 120px; }
   section{ margin-top:12px; }
-
   .section{ border-radius:22px; }
-  .sectionInner{ padding:16px 14px; } /* antes 46px */
+  .sectionInner{ padding:16px 14px; }
+  .section h2{ font-size:22px; margin:0 0 8px; }
+  .lead{ font-size:15px; line-height:1.5; margin:0 0 14px; max-width:100%; }
 
-  .lead{
-    font-size:15px;
-    line-height:1.55;
-    margin:0 0 16px;
-    max-width:100%;
-  }
-
-  /* Banner: el principal problema */
+  /* banner tipo feed */
+  .slides{ min-height:310px; }
   .banner{ border-radius:22px; }
-  .slides{ min-height:360px; }         /* antes 520 */
-  .bannerContent{ padding:18px 16px; max-width:100%; }
-
-  .kicker{
-    font-size:12.5px;
-    padding:8px 10px;
-    gap:8px;
-  }
-
+  .bannerContent{ padding:16px 14px; max-width:100%; }
+  .kicker{ font-size:12px; padding:7px 10px; }
   .bannerContent h1{
-    margin:12px 0 10px;
     font-size: clamp(26px, 7.2vw, 34px);
     line-height:1.08;
+    margin:10px 0 10px;
   }
-
   .bannerContent p{
     font-size:15px;
-    line-height:1.55;
-    margin:0 0 14px;
-    max-width: 100%;
+    line-height:1.5;
+    margin:0 0 12px;
+    max-width:100%;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:3;  /* recorta banner texto */
+    overflow:hidden;
   }
-
-  /* Botones del banner: grilla compacta */
   .bannerActions{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -507,51 +483,80 @@ img, video { max-width: 100%; height: auto; display: block; }
     border-radius:16px;
     font-size:13.5px;
   }
-  .bannerActions .btn.cta{ grid-column:1 / -1; } /* CTA ocupa toda la fila */
-
-  /* Dots del carrusel: más pegados */
-  .bannerControls{
-    left:16px;
-    bottom:14px;
-    gap:8px;
-  }
+  .bannerActions .btn.cta{ grid-column:1 / -1; }
+  .bannerControls{ left:16px; bottom:12px; }
   .dot{ width:9px; height:9px; }
 
-  /* Cards / tiles más densas */
-  .grid3,.grid2,.plans,.servicesList,.articleGrid,.contactGrid{ gap:12px; }
-  .tile{
-    padding:14px;
-    border-radius:18px;
-  }
-  .tile h3{ margin:0 0 8px; font-size:16px; }
-  .tile p{ font-size:14.5px; line-height:1.55; }
+  /* cards más compactas */
+  .grid3, .grid2, .servicesList, .articleGrid, .contactGrid{ gap:12px; }
+  .tile{ padding:14px; border-radius:18px; }
+  .tile h3{ font-size:16px; margin:0 0 8px; }
+  .tile p, .tile li{ font-size:14.5px; line-height:1.45; }
+  .tile ul{ margin:8px 0 0; padding-left:18px; }
 
-  /* Estiliza UL dentro de tiles (menos margen default) */
-  .tile ul{
-    margin:8px 0 0;
-    padding-left:18px;
-    font-size:14.5px;
-    line-height:1.55;
-  }
-
-  /* Photo cards: menos altura */
+  /* Photo cards menos altos */
   .photoCard{ min-height:210px; border-radius:22px; }
   .photoCard .caption{ left:14px; right:14px; bottom:12px; }
-  .photoCard .caption b{ font-size:15px; }
-  .photoCard .caption span{ font-size:12.8px; line-height:1.45; }
+  .photoCard .caption span{ font-size:12.8px; line-height:1.4; }
 
-  /* Paper image: menos alto */
-  .paperImage{ min-height:240px; border-radius:22px; }
+  /* ARTÍCULO: recortes */
+  #articulo .abstract{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:4;
+    overflow:hidden;
+  }
+  #articulo .citation{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+  /* Estadísticos/Conclusiones (k1/k2 viven dentro de tiles) */
+  #articulo .tile p{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:6;
+    overflow:hidden;
+  }
+  /* Imagen paper más baja */
+  .paperImage{ min-height:unset; aspect-ratio:16/10; border-radius:18px; }
 
-  /* Formularios: evita zoom en iOS y compacta */
-  input, select, textarea{ font-size:16px; } /* iOS no hace zoom */
-  .contactCardLight{ padding:16px; border-radius:22px; }
-  .field{ gap:6px; margin-top:10px; }
-  input, select, textarea{ padding:10px 12px; border-radius:14px; }
-  textarea{ min-height:84px; }
+  /* GALERIA: Filosofía/Objetivo recortado */
+  #galeria .tile p{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:7;
+    overflow:hidden;
+  }
 
-  /* CTA flotante: barra inferior compacta */
-  body{ padding-bottom:92px; }
+  /* SERVICIOS: recortar párrafos largos */
+  #servicios .tile p{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:3;
+    overflow:hidden;
+  }
+
+  /* PLANES: carrusel horizontal comparable */
+  #planes .plans{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    gap:12px;
+    padding:4px 2px 10px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  #planes .plans::-webkit-scrollbar{ display:none; }
+  #planes .plan{
+    scroll-snap-align:start;
+    padding:14px;
+    border-radius:18px;
+    flex:0 0 84vw; /* 1 grande + se asoma el siguiente */
+  }
+
+  /* botones flotante a barra inferior */
   .float{ left:12px; right:12px; bottom:12px; }
   .float .btn{
     width:100%;
@@ -560,470 +565,21 @@ img, video { max-width: 100%; height: auto; display: block; }
     font-size:14px;
     border-radius:16px;
   }
-
-  /* En móvil: oculta un botón duplicado del header (ahorra altura visual) */
-  nav .btn:not(.cta){ display:none; } /* deja solo "Solicitar info" */
 }
 
-/* --- 5) Mobile pequeño: aún más compacto --- */
-@media (max-width: 390px){
-  .slides{ min-height:330px; }
-  .bannerActions{ grid-template-columns:1fr; }
-  .bannerActions .btn.cta{ grid-column:auto; }
-  nav{ max-width: 58vw; }
-}
-
-/* =========================================================
-   AURA • COMPACT MODE (GLOBAL)
-   Objetivo: más info visible, menos “aire” en móvil/tablet
-========================================================= */
-
-/* --------- 1) Espaciados y tipografía más densos --------- */
-@media (max-width: 768px){
-  section{ margin-top: 12px !important; }
-  .sectionInner{ padding: 16px 14px !important; }
-  .section h2{ font-size: 22px !important; margin: 0 0 8px !important; }
-  .lead{ font-size: 15px !important; line-height: 1.55 !important; margin: 0 0 14px !important; }
-
-  .tile{ padding: 14px !important; border-radius: 18px !important; }
-  .tile h3{ font-size: 16px !important; margin: 0 0 8px !important; }
-  .tile p, .tile li{
-    font-size: 14.5px !important;
-    line-height: 1.5 !important;
-  }
-  .tile ul{ margin: 8px 0 0 !important; padding-left: 18px !important; }
-}
-
-/* --------- 2) GRIDS: 2 columnas en móvil, 3 en móvil grande --------- */
-@media (max-width: 560px){
-  /* Galería (3 cards) + Turnitin (3 cards) */
-  #galeria .grid3,
-  #turnitin .grid3{
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 10px !important;
-  }
-
-  /* Servicios: 2 columnas */
-  #servicios .servicesList{
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 10px !important;
-  }
-
-  /* Planes: 2 columnas */
-  #planes .plans{
-    grid-template-columns: repeat(
-
-/* =========================================================
-   FB-MOBILE PACK v2 (super comprimido + planes en 2 columnas)
-   Pegar AL FINAL del <style>
-========================================================= */
-
-/* 0) Por si antes forzaste 1 columna en pantallas pequeñas */
-@media (max-width: 390px){
-  #planes .plans{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
-  #servicios .servicesList{ grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
-}
-
-/* 1) Banner aún más compacto (para que “entre todo” a primera vista) */
-@media (max-width: 560px){
-  .slides{ min-height: 300px !important; }          /* baja más el hero */
-  .bannerContent{ padding: 16px 14px !important; }
-  .kicker{ font-size: 12px !important; padding: 7px 10px !important; }
-
-  /* texto del banner en preview (2 líneas) */
-  .bannerContent p{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-    margin-bottom: 10px !important;
-  }
-
-  /* deja solo CTA principal (tipo Facebook) */
-  .bannerActions{ grid-template-columns: 1fr !important; }
-  .bannerActions .btn.ghost{ display:none !important; }
-}
-
-/* 2) PLANES AURA: 2 columnas SIEMPRE en móvil + cards “mini” */
-@media (max-width: 560px){
-  #planes .plans{
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 10px !important;
-  }
-
-  #planes .plan{
-    padding: 12px !important;
-    border-radius: 18px !important;
-  }
-
-  #planes .tag{
-    padding: 7px 9px !important;
-    font-size: 11.5px !important;
-  }
-
-  #planes .plan h3{
-    font-size: 15px !important;
-    line-height: 1.15 !important;
-    margin: 10px 0 8px !important;
-  }
-
-  /* oculta el párrafo largo del plan (se vuelve “preview”) */
-  #planes .plan p{ display:none !important; }
-
-  /* lista más corta (muestra 3 items y listo) */
-  #planes .plan ul{
-    margin: 6px 0 10px !important;
-    padding-left: 16px !important;
-    font-size: 13.5px !important;
-    line-height: 1.45 !important;
-  }
-  #planes .plan ul li:nth-child(n+4){ display:none !important; }
-  #planes .plan ul::after{
-    content:"… y más" !important;
-    display:block !important;
-    margin-top: 4px !important;
-    font-size: 12px !important;
-    color: rgba(244,247,255,.72) !important;
-  }
-
-  /* deja solo 1 botón para no alargar la tarjeta */
-  #planes .ctaRow .btn:not(.cta){ display:none !important; }
-  #planes .ctaRow .btn.cta{
-    width: 100% !important;
-    justify-content: center !important;
-    padding: 10px 12px !important;
-    border-radius: 14px !important;
-    font-size: 13.5px !important;
-  }
-}
-
-/* 3) Servicios: 2 columnas + compacta texto */
-@media (max-width: 560px){
-  #servicios .servicesList{
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 10px !important;
-  }
-
-  /* preview de párrafos largos dentro de tiles */
-  #servicios .tile p{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-}
-
-/* 4) Artículo: ultra compacto + insights en 2 columnas */
-@media (max-width: 560px){
-  #articulo .articleCard{
-    padding: 14px !important;
-    border-radius: 18px !important;
-  }
-
-  #articulo .articleTitle{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-
-  #articulo .abstract{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-    margin-bottom: 10px !important;
-  }
-
-  /* tus insights (k1/k2) lado a lado */
-  #articulo .articleCard .grid3{
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 10px !important;
-  }
-
-  /* imagen del paper más bajita */
-  #articulo .paperImage{
-    min-height: unset !important;
-    aspect-ratio: 16 / 10 !important;
-    border-radius: 18px !important;
-  }
-}
-
-/* 5) Filosofía/Objetivo (muy largos): preview tipo feed */
-@media (max-width: 560px){
-  #galeria .tile p{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 6 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-}
-
-/* =========================================================
-   FB-MOBILE: menos scroll, previews, y planes comparables
-   Pegar AL FINAL del <style>
-========================================================= */
-
-/* --------- Densidad general en móvil --------- */
-@media (max-width: 560px){
-  .wrap{ padding: 0 12px 96px !important; }
-  section{ margin-top: 12px !important; }
-  .sectionInner{ padding: 14px 12px !important; }
-
-  .section h2{ font-size: 20px !important; margin: 0 0 8px !important; }
-  .lead{ font-size: 14.5px !important; line-height: 1.45 !important; margin: 0 0 12px !important; }
-
-  .tile{ padding: 13px !important; border-radius: 18px !important; }
-  .tile h3{ font-size: 15.5px !important; margin: 0 0 7px !important; }
-  .tile p, .tile li{ font-size: 14.2px !important; line-height: 1.42 !important; }
-  .tile ul{ margin: 8px 0 0 !important; padding-left: 16px !important; }
-}
-
-/* --------- PREVIEWS (recorta textos largos) --------- */
-@media (max-width: 560px){
-
-  /* Artículo */
-  #articulo .articleTitle{
-    font-size: 18px !important;
-    line-height: 1.15 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-  #articulo .abstract{
-    font-size: 14.3px !important;
-    line-height: 1.42 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 4 !important; /* antes era larguísimo */
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-  #articulo .citation{
-    font-size: 13.2px !important;
-    line-height: 1.35 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-
-  /* Filosofía + Objetivo (solo preview, estilo feed) */
-  #galeria .tile p{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 7 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-
-  /* Servicios: preview en párrafos */
-  #servicios .tile p{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
-  }
-}
-
-/* --------- Imagen del artículo más bajita --------- */
-@media (max-width: 560px){
-  #articulo .paperImage{
-    min-height: unset !important;
-    aspect-ratio: 16 / 10 !important;
-    border-radius: 18px !important;
-  }
-}
-
-/* =========================================================
-   PLANES AURA: COMPARABLES (2 columnas móvil / 3 en grande)
-========================================================= */
-
-/* MÓVIL: 2 columnas SI O SI */
-@media (max-width: 560px){
-  #planes .plans{
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 10px !important;
-  }
-
-  #planes .plan{
-    padding: 12px !important;
-    border-radius: 18px !important;
-  }
-
-  #planes .tag{
-    padding: 7px 9px !important;
-    font-size: 11.5px !important;
-  }
-
-  #planes .plan h3{
-    font-size: 15px !important;
-    line-height: 1.15 !important;
-    margin: 10px 0 6px !important;
-  }
-
-  /* quita el párrafo largo del plan (modo “feed”) */
-  #planes .plan p{ display:none !important; }
-
-  /* bullets cortos (para comparar rápido) */
-  #planes .plan ul{
-    margin: 6px 0 10px !important;
-    padding-left: 16px !important;
-    font-size: 13.4px !important;
-    line-height: 1.35 !important;
-  }
-  #planes .plan ul li:nth-child(n+4){ display:none !important; } /* solo 3 bullets */
-  #planes .plan ul::after{
-    content:"… y más" !important;
-    display:block !important;
-    margin-top: 4px !important;
-    font-size: 12px !important;
-    color: rgba(244,247,255,.72) !important;
-  }
-
-  /* deja SOLO un botón (para que la tarjeta no crezca) */
-  #planes .ctaRow .btn:not(.cta){ display:none !important; }
-  #planes .ctaRow{ display:block !important; }
-  #planes .ctaRow .btn.cta{
-    width: 100% !important;
-    justify-content: center !important;
-    padding: 10px 12px !important;
-    font-size: 13.5px !important;
-    border-radius: 14px !important;
-  }
-}
-
-/* MÓVIL GRANDE / TABLET: 3 columnas para comparar mejor */
-@media (min-width: 480px) and (max-width: 768px){
-  #planes .plans{
-    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
-    gap: 12px !important;
-  }
-}
-
-/* EXTRA: si tu celular es MUY angosto (ej 320px), mejor carrusel horizontal tipo FB */
-@media (max-width: 360px){
-  #planes .plans{
-    display:flex !important;
-    gap: 10px !important;
-    overflow-x:auto !important;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 6px !important;
-  }
-  #planes .plan{
-    min-width: 78vw !important;
-    scroll-snap-align: start;
-  }
-}
-
-/* =========================================================
-   FORCE MOBILE FEED + PLANS CAROUSEL (PEGAR AL FINAL)
-========================================================= */
-
-/* 1) Nunca ocultar botones (arregla lo de "están escondidos") */
-@media (max-width: 768px){
-  nav .btn{ display:inline-flex !important; }
-  .bannerActions .btn{ display:inline-flex !important; }
-}
-
-/* 2) Banner actions compactos pero visibles */
-@media (max-width: 560px){
-  .bannerActions{
-    display:flex !important;
-    flex-wrap:wrap !important;
-    gap:10px !important;
-  }
-  .bannerActions .btn{
-    flex:1 1 calc(50% - 10px) !important; /* 2 por fila */
-    justify-content:center !important;
-    border-radius:16px !important;
-    padding:11px 12px !important;
-    font-size:13.5px !important;
-  }
-  .bannerActions .btn.cta{
-    flex-basis:100% !important;          /* CTA arriba a ancho completo */
-  }
-}
-
-/* 3) Cortar textos largos (Filosofía/Objetivo + Estadísticos/Conclusiones + abstract)
-   -> estilo "feed": se ve rápido, no eterno hacia abajo */
-@media (max-width: 560px){
-  /* Filosofía / Objetivo (galería) */
-  #galeria .tile p{
-    display:-webkit-box !important;
-    -webkit-box-orient:vertical !important;
-    -webkit-line-clamp:7 !important;   /* ajusta 6–8 si quieres */
-    overflow:hidden !important;
-  }
-
-  /* Estadísticos / Conclusiones (son <p id="k1"> y <p id="k2"> dentro de .tile) */
-  #articulo .tile p{
-    display:-webkit-box !important;
-    -webkit-box-orient:vertical !important;
-    -webkit-line-clamp:6 !important;
-    overflow:hidden !important;
-  }
-
-  /* Abstract del artículo */
-  #articulo .abstract{
-    display:-webkit-box !important;
-    -webkit-box-orient:vertical !important;
-    -webkit-line-clamp:4 !important;
-    overflow:hidden !important;
-  }
-
-  /* Cita (para que no se vuelva un párrafo gigante) */
-  #articulo .citation{
-    display:-webkit-box !important;
-    -webkit-box-orient:vertical !important;
-    -webkit-line-clamp:2 !important;
-    overflow:hidden !important;
-  }
-}
-
-/* 4) PLANES AURA: carrusel horizontal para comparar (1 / 2 / 3 visibles) */
-@media (max-width: 980px){
-  #planes .plans{
-    display:flex !important;
-    flex-wrap:nowrap !important;
-    overflow-x:auto !important;
-    gap:12px !important;
-    padding:4px 2px 12px !important;
-    scroll-snap-type:x mandatory !important;
-    -webkit-overflow-scrolling:touch;
-  }
-  #planes .plans::-webkit-scrollbar{ display:none; }
-
-  #planes .plan{
-    scroll-snap-align:start !important;
-    border-radius:18px !important;
-    padding:14px !important;
-  }
-
-  /* Compacta un poco dentro del plan */
-  #planes .tag{ padding:7px 9px !important; font-size:12px !important; }
-  #planes .plan h3{ font-size:16px !important; line-height:1.15 !important; }
-  #planes .plan p{ font-size:13.8px !important; line-height:1.4 !important; }
-  #planes .plan ul{ font-size:13.6px !important; line-height:1.4 !important; }
-}
-
-/* <= 479px: 1 plan grande + se asoma el siguiente (comparación rápida) */
-@media (max-width: 479px){
-  #planes .plan{ flex:0 0 84vw !important; }
-}
-
-/* 480–719px: 2 planes visibles */
+/* 2 visibles (móvil grande) */
 @media (min-width: 480px) and (max-width: 719px){
-  #planes .plan{ flex:0 0 48vw !important; }
+  #planes .plan{ flex-basis:48vw; }
 }
 
-/* 720–980px: 3 planes visibles */
+/* 3 visibles (tablet) */
 @media (min-width: 720px) and (max-width: 980px){
-  #planes .plan{ flex:0 0 32vw !important; }
+  #planes .plan{ flex-basis:32vw; }
 }
+</style>
 
-	
-  </style>
+
+
 </head>
 
 <body>
