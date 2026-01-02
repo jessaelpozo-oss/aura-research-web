@@ -304,37 +304,68 @@ section{ margin-top:22px; }
 .plan ul{ margin:0 0 18px; padding-left:18px; color:rgba(244,247,255,.84); font-size:15.5px; line-height:1.9; }
 .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; }
 
+/* Swipe hint (Planes) */
+.swipeHint{
+  display:none;
+  margin: -12px 0 18px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: rgba(244,247,255,.82);
+  font-size: 14px;
+  line-height: 1.35;
+}
+.swipeHint b{ color:#fff; }
+.swipeHint .arr{
+  display:inline-block;
+  margin-left:6px;
+  animation: nudge 1.2s ease-in-out infinite;
+}
+@keyframes nudge{
+  0%,100%{ transform: translateX(0); opacity:.85; }
+  50%{ transform: translateX(6px); opacity:1; }
+}
+
 /* Services */
 .servicesList{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
-
-/* Article */
-.articleGrid{ display:grid; grid-template-columns:1.1fr .9fr; gap:18px; align-items:stretch; }
-.articleCard{ border-radius:28px; padding:26px; border:1px solid rgba(10,18,32,.10); background:#fff; }
-.sectionDark .articleCard{ border-color:rgba(255,255,255,.14); background:var(--d-card); }
-
-.badge{
-  display:inline-flex; align-items:center; gap:10px;
-  padding:10px 14px;
-  border-radius:999px;
-  font-weight:900;
-  font-size:13px;
-  background:rgba(31,175,150,.12);
-  color:var(--aura);
-}
-.articleTitle{ margin:14px 0 10px; font-size:22px; }
-.abstract{ margin:0 0 14px; font-size:16px; line-height:1.9; color:#5B6C86; }
-.citation{ font-size:14.5px; line-height:1.7; color:#6A7C96; }
-
-.paperImage{
-  border-radius:24px;
-  overflow:hidden;
-  border:1px solid rgba(10,18,32,.10);
-  min-height:340px;
+.serviceTile{
   position:relative;
-  box-shadow:0 16px 40px rgba(10,18,32,.10);
+  background:
+    radial-gradient(700px 240px at 12% 0%, rgba(31,175,150,.14), transparent 55%),
+    rgba(10,18,32,.02);
+  border:1px solid rgba(10,18,32,.10);
 }
-.paperImage .img{ position:absolute; inset:0; background-size:cover; background-position:center; }
-.paperImage .overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,18,32,.10) 0%, rgba(10,18,32,.74) 92%); }
+.serviceTile::before{
+  content:"";
+  position:absolute; inset:-1px;
+  border-radius:26px;
+  background:linear-gradient(120deg, rgba(31,175,150,.12), transparent 40%);
+  opacity:.55;
+  pointer-events:none;
+}
+.serviceTile > *{ position:relative; z-index:1; }
+
+.svcTop{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.svcIcon{
+  width:38px; height:38px;
+  border-radius:14px;
+  display:grid; place-items:center;
+  background:rgba(31,175,150,.14);
+  border:1px solid rgba(31,175,150,.24);
+  font-size:18px;
+}
+.svcMeta{
+  display:inline-flex;
+  margin-top:10px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(31,175,150,.22);
+  background:rgba(31,175,150,.08);
+  color:#0F5E50;
+  font-weight:800;
+  font-size:13.2px;
+}
 
 /* Contact */
 .contactGrid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
@@ -409,7 +440,6 @@ textarea{ min-height:96px; resize:vertical; }
 
 /* Tablet + small screens */
 @media (max-width: 980px){
-  /* header compacto + nav horizontal scrolleable */
   .topbar{ padding:10px 12px; }
   header{ border-radius:20px; padding:10px 12px; gap:10px; }
   .logo{ width:110px; height:70px; border-radius:18px; }
@@ -429,21 +459,20 @@ textarea{ min-height:96px; resize:vertical; }
   .navlink{ font-size:13px; padding:9px 10px; }
   .btn{ padding:10px 12px; font-size:13px; gap:8px; }
 
-  /* grids */
-  .grid2, .articleGrid, .contactGrid{ grid-template-columns:1fr; }
+  .grid2, .contactGrid{ grid-template-columns:1fr; }
   .grid3{ grid-template-columns:repeat(2, 1fr); }
   .servicesList{ grid-template-columns:repeat(2, 1fr); }
 
-  /* banner más bajo */
   .slides{ min-height:380px; }
   .bannerContent{ padding:26px; }
   .bannerContent h1{ font-size:44px; }
+
+  .swipeHint{ display:block; }
 }
 
 /* Mobile FEED */
 @media (max-width: 560px){
-  /* densidad general */
-  body{ padding-bottom: 96px; } /* zona segura del CTA flotante */
+  body{ padding-bottom: 96px; }
   .wrap{ padding:0 12px 120px; }
   section{ margin-top:12px; }
   .section{ border-radius:22px; }
@@ -451,94 +480,43 @@ textarea{ min-height:96px; resize:vertical; }
   .section h2{ font-size:22px; margin:0 0 8px; }
   .lead{ font-size:15px; line-height:1.5; margin:0 0 14px; max-width:100%; }
 
-  /* banner tipo feed */
-  .slides{ min-height:310px; }
+  .slides{ min-height:380px; } /* banner más cómodo */
   .banner{ border-radius:22px; }
-  .bannerContent{ padding:16px 14px; max-width:100%; }
-  .kicker{ font-size:12px; padding:7px 10px; }
-  .bannerContent h1{
-    font-size: clamp(26px, 7.2vw, 34px);
-    line-height:1.08;
-    margin:10px 0 10px;
-  }
+  .bannerContent{ padding:22px 16px 22px; max-width:100%; }
+  .kicker{ font-size:12.8px; padding:8px 12px; margin-bottom:12px; }
+  .bannerContent h1{ font-size:32px; line-height:1.12; margin:10px 0 12px; }
   .bannerContent p{
-    font-size:15px;
-    line-height:1.5;
-    margin:0 0 12px;
-    max-width:100%;
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:3;  /* recorta banner texto */
-    overflow:hidden;
+    font-size:15.2px;
+    line-height:1.6;
+    margin:0 0 16px;
+    display:block;
+    overflow:visible;
   }
-  .bannerActions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
+
+  .bannerActions{ gap: 12px; margin-top: 6px; }
   .bannerActions .btn{
-    width:100%;
-    justify-content:center;
-    padding:11px 12px;
-    border-radius:16px;
-    font-size:13.5px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    font-size: 13.8px;
+    flex: 1 1 calc(50% - 12px);
+    justify-content: center;
   }
-  .bannerActions .btn.cta{ grid-column:1 / -1; }
-  .bannerControls{ left:16px; bottom:12px; }
+  .bannerActions .btn.cta{ flex-basis: 100%; font-size: 14.2px; }
+
+  .bannerControls{ left:16px; bottom:16px; }
   .dot{ width:9px; height:9px; }
 
-  /* cards más compactas */
-  .grid3, .grid2, .servicesList, .articleGrid, .contactGrid{ gap:12px; }
+  .grid3, .grid2, .servicesList, .contactGrid{ gap:12px; }
   .tile{ padding:14px; border-radius:18px; }
   .tile h3{ font-size:16px; margin:0 0 8px; }
   .tile p, .tile li{ font-size:14.5px; line-height:1.45; }
   .tile ul{ margin:8px 0 0; padding-left:18px; }
 
-  /* Photo cards menos altos */
   .photoCard{ min-height:210px; border-radius:22px; }
   .photoCard .caption{ left:14px; right:14px; bottom:12px; }
   .photoCard .caption span{ font-size:12.8px; line-height:1.4; }
 
-  /* ARTÍCULO: recortes */
-  #articulo .abstract{
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:4;
-    overflow:hidden;
-  }
-  #articulo .citation{
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
-    overflow:hidden;
-  }
-  /* Estadísticos/Conclusiones (k1/k2 viven dentro de tiles) */
-  #articulo .tile p{
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:6;
-    overflow:hidden;
-  }
-  /* Imagen paper más baja */
-  .paperImage{ min-height:unset; aspect-ratio:16/10; border-radius:18px; }
-
-  /* GALERIA: Filosofía/Objetivo recortado */
-  #galeria .tile p{
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:7;
-    overflow:hidden;
-  }
-
-  /* SERVICIOS: recortar párrafos largos */
-  #servicios .tile p{
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:3;
-    overflow:hidden;
-  }
-
-  /* PLANES: carrusel horizontal comparable */
+  /* PLANES: carrusel horizontal */
   #planes .plans{
     display:flex;
     flex-wrap:nowrap;
@@ -553,10 +531,15 @@ textarea{ min-height:96px; resize:vertical; }
     scroll-snap-align:start;
     padding:14px;
     border-radius:18px;
-    flex:0 0 84vw; /* 1 grande + se asoma el siguiente */
+    flex:0 0 84vw;
+  }
+  .swipeHint{
+    display:block;
+    margin: -6px 0 14px;
+    border-radius: 14px;
+    font-size: 13.6px;
   }
 
-  /* botones flotante a barra inferior */
   .float{ left:12px; right:12px; bottom:12px; }
   .float .btn{
     width:100%;
@@ -564,6 +547,24 @@ textarea{ min-height:96px; resize:vertical; }
     padding:12px 14px;
     font-size:14px;
     border-radius:16px;
+  }
+
+  /* Contacto: chips en 2 columnas */
+  #contacto .credBar{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 8px;
+    margin-top: 12px;
+  }
+  #contacto .chip{
+    padding: 8px 10px;
+    font-size: 13px;
+    text-align: center;
+  }
+  #contacto .copyright{
+    margin-top: 12px;
+    font-size: 13.8px;
+    line-height: 1.4;
   }
 }
 
@@ -576,139 +577,28 @@ textarea{ min-height:96px; resize:vertical; }
 @media (min-width: 720px) and (max-width: 980px){
   #planes .plan{ flex-basis:32vw; }
 }
-
-/* =========================================================
-   MOBILE REFINADO: Banner menos apretado + "Aura está para ti" compacto
-   (Pegar AL FINAL del <style>)
-========================================================= */
-
-@media (max-width: 560px){
-
-  /* ---------- BANNER: menos comprimido, SIN puntos suspensivos ---------- */
-  .slides{ min-height: 380px !important; }
-
-  .bannerContent{
-    padding: 22px 16px 22px !important;
-    max-width: 100% !important;
-  }
-
-  .kicker{
-    font-size: 12.8px !important;
-    padding: 8px 12px !important;
-    margin-bottom: 12px !important;
-  }
-
-  .bannerContent h1{
-    font-size: 32px !important;
-    line-height: 1.12 !important;
-    margin: 10px 0 12px !important;
-  }
-
-  /* QUITA clamps anteriores (adiós "...") */
-  .bannerContent p{
-    font-size: 15.2px !important;
-    line-height: 1.6 !important;
-    margin: 0 0 16px !important;
-
-    display: block !important;
-    overflow: visible !important;
-    -webkit-line-clamp: unset !important;
-    -webkit-box-orient: unset !important;
-  }
-
-  /* Botones: orden bonito (1 grande + 2 abajo) sin verse pegados */
-  .bannerActions{
-    gap: 12px !important;
-    margin-top: 6px !important;
-  }
-  .bannerActions .btn{
-    padding: 12px 14px !important;
-    border-radius: 16px !important;
-    font-size: 13.8px !important;
-    flex: 1 1 calc(50% - 12px) !important;
-    justify-content: center !important;
-  }
-  .bannerActions .btn.cta{
-    flex-basis: 100% !important;
-    font-size: 14.2px !important;
-  }
-
-  /* Dots un poquito más arriba/centrados */
-  .bannerControls{
-    left: 16px !important;
-    bottom: 16px !important;
-  }
-
-  /* ---------- CONTACTO: "Aura está para ti" MÁS compacto ---------- */
-  #contacto .contactCardLight{
-    padding: 16px !important;
-    border-radius: 20px !important;
-  }
-
-  /* Este <p> tiene estilos inline, por eso usamos !important */
-  #contacto .contactGrid > .contactCardLight:nth-child(2) p{
-    font-size: 14.6px !important;
-    line-height: 1.55 !important;
-    margin-top: 10px !important;
-  }
-
-  /* Chips en 2 columnas (menos alto) */
-  #contacto .credBar{
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
-    gap: 8px !important;
-    margin-top: 12px !important;
-  }
-  #contacto .chip{
-    padding: 8px 10px !important;
-    font-size: 13px !important;
-    text-align: center !important;
-  }
-
-  /* Botones del contacto bien alineados */
-  #contacto .contactGrid > .contactCardLight:nth-child(2) .btn{
-    padding: 11px 12px !important;
-    border-radius: 16px !important;
-    font-size: 13.8px !important;
-  }
-
-  /* Copyright más compacto */
-  #contacto .copyright{
-    margin-top: 12px !important;
-    font-size: 13.8px !important;
-    line-height: 1.4 !important;
-  }
-}
-
 </style>
-
-
-
 </head>
 
 <body>
-  <!-- Topbar fija -->
+  <!-- Topbar -->
   <div class="topbar">
     <header id="hdr">
       <div class="brand">
-       <div class="logo" aria-label="Logo AURA Research">
-		<img src="./logo.png" alt="AURA Research" class="logoImg">
-			</div>
+        <div class="logo" aria-label="Logo AURA Research">
+          <img src="./logo.png" alt="AURA Research" class="logoImg">
         </div>
-  
+      </div>
 
       <nav>
-		<a class="navlink" href="#galeria">¿Qué es AURA?</a>
-		<a class="navlink" href="#articulo">Artículo</a>
-		<a class="navlink" href="#planes">Planes</a>
+        <a class="navlink" href="#galeria">¿Qué es AURA?</a>
+        <a class="navlink" href="#planes">Planes</a>
         <a class="navlink" href="#servicios">Servicios</a>
         <a class="btn" href="#contacto">Contacto</a>
-        <a class="btn cta" href="#contacto">Solicitar info</a>
+        <a class="btn cta" href="#contacto">WhatsApp AURA</a>
       </nav>
     </header>
   </div>
-
-
 
   <div class="wrap">
     <!-- Banner -->
@@ -723,13 +613,13 @@ textarea{ min-height:96px; resize:vertical; }
           <div class="kicker">Metodología • Rigor • Ética • Ciencias Médicas</div>
           <h1>Tu tesis no tiene que sentirse imposible.</h1>
           <p>
-            AURA ofrece corrección académica, metodología y apoyo estratégico 
-			para que tu trabajo cumpla criterios y se sostenga en la defensa.
+            AURA te acompaña con corrección académica, metodología y apoyo estratégico
+            para que tu trabajo cumpla criterios y se sostenga con seguridad en la defensa.
           </p>
           <div class="bannerActions">
             <a class="btn cta" href="#planes">Ver Planes AURA</a>
-            <a class="btn ghost" href="#articulo">Artículo de la semana</a>
-            <a class="btn ghost" href="#contacto">Hablar conmigo</a>
+            <a class="btn ghost" href="#servicios">Servicios</a>
+            <a class="btn ghost" href="#contacto">Hablar por WhatsApp</a>
           </div>
         </div>
 
@@ -741,10 +631,10 @@ textarea{ min-height:96px; resize:vertical; }
     <section class="section reveal" id="galeria">
       <div class="sectionInner">
         <h2>No estás atrasado: estás sin estructura.</h2>
-        <p class="lead">Cuando hay método, la tesis avanza y se defiende con confianza.</p>
+        <p class="lead">Cuando hay método, la tesis avanza, se ordena y se defiende con confianza.</p>
 
         <div class="grid3">
-          <div class="photoCard"><div class="img" id="g0"></div><div class="overlay"></div><div class="caption"><b></b><span>¿Estás cerca de la defensa y tu trabajo aún no está solido?</span></div></div>
+          <div class="photoCard"><div class="img" id="g0"></div><div class="overlay"></div><div class="caption"><b></b><span>¿Estás cerca de la defensa y tu trabajo aún no está sólido?</span></div></div>
           <div class="photoCard"><div class="img" id="g1"></div><div class="overlay"></div><div class="caption"><b></b><span>¿Tienes datos pero no sabes cómo tabular ni qué pruebas usar?</span></div></div>
           <div class="photoCard"><div class="img" id="g2"></div><div class="overlay"></div><div class="caption"><b></b><span>¿Necesitas diapositivas y simulaciones para defender sin miedo?</span></div></div>
         </div>
@@ -752,50 +642,22 @@ textarea{ min-height:96px; resize:vertical; }
         <div style="height:18px"></div>
 
         <div class="grid2">
-          <div class="photoCard" style="min-height:320px"><div class="img" id="g3"></div><div class="overlay"></div><div class="caption"><b>Andrew Pozo</b><span>Magister en Metodología de la Investigación en Salud / Director de AURA Research</span></div></div>
+          <div class="photoCard" style="min-height:320px"><div class="img" id="g3"></div><div class="overlay"></div><div class="caption"><b>Andrew Pozo</b><span>Mgst. en Metodología de la Investigación en Salud · Director de AURA Research</span></div></div>
           <div class="grid3" style="grid-template-columns:1fr; gap:18px">
-            <div class="tile"><h3>Filosofía</h3><p>AURA Research es un entorno investigativo, conformado por profesionales de salud e investigadores, que se sustenta en los
-principios de la investigación científica rigurosa, la ética académica y el
-acompañamiento formativo. No sustituye la autoría intelectual del
-estudiante, sino que fortalece sus competencias investigativas mediante
-guía experta, análisis metodológico y corrección especializada.</p></div>
-            <div class="tile"><h3>Objetivo</h3><p>Brindar acompañamiento académico e investigativo especializado a
-estudiantes de pregrado y posgrado, garantizando rigor metodológico,
-ética científica y calidad académica en tesis, trabajos de investigación y
-artículos científicos, contribuyendo a la formación de profesionales críticos,
-competentes y comprometidos con la ciencia.
-</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-	
-	    <!-- Artículo científico de la semana -->
-    <section class="section reveal" id="articulo">
-      <div class="sectionInner">
-        <h2>Artículo científico de la semana</h2>
-        <p class="lead">Una sección sobre ciencia y actualizaciones en el campo de la salud.</p>
-
-        <div class="articleGrid">
-          <div class="articleCard">
-            <div class="badge">AURA Weekly Paper</div>
-            <div class="articleTitle" id="paperTitle">(Título del artículo)</div>
-            <p class="abstract" id="paperAbstract">(Abstract corto de 3–4 líneas, lenguaje claro y útil.)</p>
-            <div class="citation" id="paperCitation">(Cita Vancouver corta + DOI/enlace)</div>
-            <div style="height:12px"></div>
-          </div>
-
-          <div class="articleCard" style="padding:0; border:none; background:transparent; box-shadow:none">
-            <div class="paperImage">
-              <div class="img" id="paperImg"></div>
-              <div class="overlay"></div>
-              <div class="caption">
-              </div>
+            <div class="tile">
+              <h3>Filosofía</h3>
+              <p>
+                AURA Research es un entorno investigativo conformado por profesionales de salud e investigadores.
+                Trabajamos con rigor científico y ética académica. No sustituimos tu autoría: fortalecemos tus competencias
+                con guía experta, análisis metodológico y corrección especializada.
+              </p>
             </div>
-            <div style="height:14px"></div>
-            <div class="grid3" style="grid-template-columns:1fr; gap:14px">
-              <div class="tile"><h3>Estadísticos</h3><p id="k1">(Insight rápido)</p></div>
-              <div class="tile"><h3>Conclusiones</h3><p id="k2">(Insight rápido)</p></div>
+            <div class="tile">
+              <h3>Objetivo</h3>
+              <p>
+                Brindar acompañamiento académico e investigativo a estudiantes de pregrado y posgrado, garantizando rigor metodológico,
+                ética científica y calidad académica en tesis, trabajos de investigación y artículos científicos.
+              </p>
             </div>
           </div>
         </div>
@@ -806,18 +668,22 @@ competentes y comprometidos con la ciencia.
     <section class="section sectionDark reveal" id="planes">
       <div class="sectionInner">
         <h2>Planes AURA</h2>
-        <p class="lead">Según tu requerimiento, tenemos distintos planes para ti.</p>
+        <p class="lead">Elige un plan según tu nivel de avance. Si no estás seguro, escríbenos y te recomendamos el mejor.</p>
+
+        <div class="swipeHint">
+          <b>En móvil:</b> desliza <span class="arr">→</span> para ver más planes
+        </div>
 
         <div class="plans">
           <div class="plan essential">
             <div class="tag">Plan Esencial</div>
-            <h3>Lo necesario y específico para tu Tesis</h3>
-            <p>Para investigaciones de bajo riesgo metodológico. Para servicios limitados.</p>
+            <h3>Lo necesario y específico para tu tesis</h3>
+            <p>Ideal si necesitas orden, correcciones puntuales y un cierre metodológico claro.</p>
             <ul>
               <li>Correcciones y observaciones técnicas</li>
-              <li>Redacción de capítulos según protocolo</li>
+              <li>Redacción/ajuste de capítulos según protocolo</li>
               <li>Análisis estadístico descriptivo</li>
-			  <li>Soporte básico</li>
+              <li>Soporte básico</li>
             </ul>
             <div class="ctaRow">
               <a class="btn" href="#contacto">Quiero Esencial</a>
@@ -828,15 +694,15 @@ competentes y comprometidos con la ciencia.
           <div class="plan advanced">
             <div class="tag">Plan Avanzado</div>
             <h3>Profundidad + soporte</h3>
-            <p>Para Tesis que requieren alta exigencia en método, instrumentos y análisis. Para servicios completos.</p>
+            <p>Para tesis exigentes: instrumentos, método, análisis e intervención directa para defensa.</p>
             <ul>
               <li>Correcciones y observaciones profundas</li>
-              <li>Redacción de capítulos según protocolo</li>
+              <li>Redacción/ajuste de capítulos según protocolo</li>
               <li>Análisis estadístico avanzado</li>
-			  <li>Soporte por videollamadas</li>
-			  <li>Diapositivas profesionales</li>
-			  <li>1 simulacro de defensa</li>
-			  <li>1 reporte Turnitin</li>
+              <li>Soporte por videollamadas</li>
+              <li>Diapositivas profesionales</li>
+              <li>1 simulacro de defensa</li>
+              <li>1 reporte Turnitin</li>
             </ul>
             <div class="ctaRow">
               <a class="btn" href="#contacto">Quiero Avanzado</a>
@@ -847,56 +713,88 @@ competentes y comprometidos con la ciencia.
           <div class="plan elite">
             <div class="tag">Plan Élite</div>
             <h3>Estándar máximo</h3>
-            <p>Para Tesis complejas y servicios premium.</p>
+            <p>Para tesis complejas y acompañamiento intensivo, con seguimiento continuo.</p>
             <ul>
               <li>Todo el plan avanzado</li>
               <li>Ajustes continuos post-tutorías</li>
-			  <li>2 simulacros de defensa</li>
-			  <li>Acompañamiento intensivo</li>
-			  <li>Turnitin continuo</li>
-			  <li>Redacción de artículo científico derivado de la tesis</li>
+              <li>2 simulacros de defensa</li>
+              <li>Acompañamiento intensivo</li>
+              <li>Turnitin continuo</li>
+              <li>Artículo científico derivado de la tesis</li>
             </ul>
             <div class="ctaRow">
-              <a class="btn cta" href="#contacto">Quiero Élite</a>
-              <a class="btn" href="#servicios">Complementos</a>
+              <a class="btn" href="#contacto">Quiero Élite</a>
+              <a class="btn cta" href="#contacto">Solicitar</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-
-
     <!-- Servicios -->
     <section class="section reveal" id="servicios">
       <div class="sectionInner">
-        <h2>Servicios (módulos)</h2>
-        <p class="lead">Si solo necesitas una parte, trabajamos por módulos específicos.</p>
+        <h2>Servicios por módulos</h2>
+        <p class="lead">
+          Si solo te falta una parte, trabajamos por módulos específicos. Te decimos <b>qué corregir primero</b> y cómo avanzar sin perder tiempo.
+        </p>
+
         <div class="servicesList">
-          <div class="tile"><h3>Diagnóstico(en caso de trabajo parcial)</h3><p>Si aún no te decides por el plan te ofrecemos como parte del dx: revisión completa de tu avance + informe de corrrecciones generales + videollamada explicativa</p></div>
-          <div class="tile"><h3>Servicios Parciales</h3>
-		  <ul>
-			<li>Protocolo</li>
-			<li>Planteamiento de problema, justificación</li>
-			<li>Marco teórico</li>
-			<li>Metodología</li>
-			<li>Resultados y discusión</li>		  
-		  </ul>
-			</div>
-          <div class="tile"><h3>Análisis Estadístico</h3><p>Análisis Bioestadístico Univariante y Bivariante. Técnicas Multivariantes y validez de pruebas diagnósticas</p></div>
-          <div class="tile"><h3>Corrección de plagio</h3><p>Reducción de plagio y corrección de citas bibliográficas</p></div>
-          <div class="tile"><h3>Artículos científicos</h3><p>Artículos derivados de trabajo previo</p></div>
-		  <div class="tile"><h3>Para la sustentación</h3><p> Diapositivas, clases explicativas, simulacros de defensas</p></div>
-		  <div class="tile"><h3>Asesorías profesionales</h3><p>Paquetes de asesorías académicas por horas</p></div>
+          <div class="tile serviceTile">
+            <div class="svcTop"><div class="svcIcon">🧭</div><h3>Diagnóstico (Ruta recomendada)</h3></div>
+            <p>Revisión completa de tu avance + informe claro de correcciones + videollamada breve para explicarte el plan de acción.</p>
+            <div class="svcMeta">Ideal si no sabes por dónde empezar</div>
+          </div>
+
+          <div class="tile serviceTile">
+            <div class="svcTop"><div class="svcIcon">🧱</div><h3>Metodología e instrumentos</h3></div>
+            <p>Coherencia del diseño, variables, operacionalización, muestreo, instrumentos y validez. Todo alineado a tu protocolo.</p>
+            <div class="svcMeta">Estructura + rigor</div>
+          </div>
+
+          <div class="tile serviceTile">
+            <div class="svcTop"><div class="svcIcon">📊</div><h3>Análisis estadístico</h3></div>
+            <p>Descriptivo, bivariado y multivariado según tu tipo de estudio. Interpretación y redacción de resultados con sentido.</p>
+            <div class="svcMeta">Tablas + pruebas + interpretación</div>
+          </div>
+
+          <div class="tile serviceTile">
+            <div class="svcTop"><div class="svcIcon">✍️</div><h3>Capítulos por separado</h3></div>
+            <p>Planteamiento, justificación, marco teórico, metodología, resultados, discusión y conclusiones (según norma).</p>
+            <div class="svcMeta">Trabajo parcial</div>
+          </div>
+
+          <div class="tile serviceTile">
+            <div class="svcTop"><div class="svcIcon">🧾</div><h3>Turnitin + corrección de citas</h3></div>
+            <p>Reducción de similitud con corrección de citación, paráfrasis y referencias (sin inventar datos).</p>
+            <div class="svcMeta">Menos observaciones</div>
+          </div>
+
+          <div class="tile serviceTile">
+            <div class="svcTop"><div class="svcIcon">🎓</div><h3>Defensa: diapositivas + simulacro</h3></div>
+            <p>Diapositivas profesionales, guion de sustentación, preguntas probables y simulación para que respondas con seguridad.</p>
+            <div class="svcMeta">Defiende sin miedo</div>
+          </div>
+        </div>
+
+        <div style="height:18px"></div>
+        <div class="tile" style="background:rgba(31,175,150,.06); border-color:rgba(31,175,150,.18)">
+          <h3 style="margin-bottom:8px">¿No sabes cuál elegir?</h3>
+          <p style="color:#0F5E50; margin:0; line-height:1.7">
+            Escríbenos por WhatsApp y te recomendamos el plan o módulo exacto según tu avance, tu fecha límite y tu universidad.
+          </p>
+          <div style="margin-top:12px">
+            <a class="btn cta" href="#contacto">Hablar por WhatsApp</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Turnitin (sección se mantiene, pero fuera del menú) -->
+    <!-- Turnitin -->
     <section class="section sectionDark reveal" id="turnitin">
       <div class="sectionInner">
-        <h2>Turnitin informe anti-plagio</h2>
-        <p class="lead">Trabajamos con Turnitin para ofrecerte trabajos de calidad sin plagio.</p>
+        <h2>Turnitin · Informe anti-plagio</h2>
+        <p class="lead">Te ayudamos a detectar coincidencias, corregir y entregar con más seguridad.</p>
         <div class="grid3">
           <div class="tile"><h3>Detecta</h3><p>Identifica coincidencias antes de la entrega.</p></div>
           <div class="tile"><h3>Corrige</h3><p>Mejoramos citación, paráfrasis y estructura.</p></div>
@@ -905,15 +803,17 @@ competentes y comprometidos con la ciencia.
       </div>
     </section>
 
-    <!-- Contacto (CLARO) -->
+    <!-- Contacto -->
     <section class="section reveal" id="contacto">
       <div class="sectionInner">
-        <h2>Contactanos</h2>
-        <p class="lead">No pierdas la posibilidad de que tu trabajo esté en manos de profesionales en el campo.</p>
+        <h2>Hablemos por WhatsApp</h2>
+        <p class="lead">
+          Completa estos datos y se enviarán <b>directamente por WhatsApp</b>. Te respondemos por ahí para definir alcance, tiempos y costos.
+        </p>
 
         <div class="contactGrid">
           <div class="contactCardLight">
-            <div style="font-weight:900; font-size:18px">Enviar información</div>
+            <div style="font-weight:900; font-size:18px">Enviar por WhatsApp</div>
 
             <div class="field">
               <label>Tu nombre</label>
@@ -921,16 +821,17 @@ competentes y comprometidos con la ciencia.
             </div>
 
             <div class="field">
-              <label>Qué buscas</label>
+              <label>Qué necesitas</label>
               <select id="need">
+                <option>Quiero que me recomienden un plan</option>
                 <option>Plan AURA Esencial</option>
                 <option>Plan AURA Avanzado</option>
                 <option>Plan AURA Élite</option>
-                <option>Diagnóstico</option>
-                <option>Servicio Específico</option>
+                <option>Diagnóstico (Ruta recomendada)</option>
+                <option>Servicio específico (módulos)</option>
                 <option>Informe Turnitin</option>
-                <option>Defensa</option>
-				<option>Más información</option>
+                <option>Defensa (diapositivas / simulacro)</option>
+                <option>Más información</option>
               </select>
             </div>
 
@@ -945,20 +846,21 @@ competentes y comprometidos con la ciencia.
             </div>
 
             <div class="field">
-              <a class="btn cta" id="ctaSend" href="#">Enviar</a>
+              <a class="btn cta" id="ctaSend" href="#">Enviar ahora</a>
             </div>
 
             <div class="noteLight">
-              AURA Research es acompañamiento académico: tú eres el autor. No se inventan datos ni se sustituye autoría.
+              AURA Research es acompañamiento académico. Tú eres el autor. No se inventan datos ni se sustituye la autoría.
             </div>
           </div>
 
           <div class="contactCardLight">
-            <div style="font-weight:900; font-size:18px">Aura está para ti.</div>
-            <p style="margin:12px 0 0; color:#44556F; line-height:1.9; font-size:16px">
-              No necesitas “hacer todo hoy”. Necesitas corregir <b>lo importante</b> primero.
-              Si tu tesis se siente pesada, casi siempre es por falta de estructura y dirección.
-			  Contáctanos por Whatsapp en este instante y consulta por nuestros servicios.
+            <div style="font-weight:900; font-size:18px">¿Qué pasa después?</div>
+            <p style="margin:12px 0 0; color:#44556F; line-height:1.85; font-size:16px">
+              1) Nos escribes por WhatsApp desde esta web.<br>
+              2) Te respondemos por WhatsApp para confirmar tu avance y tu fecha límite.<br>
+              3) Definimos plan/módulo, tiempos y forma de trabajo.<br>
+              <b>Todo el contacto y coordinación es por WhatsApp.</b>
             </p>
 
             <div class="credBar">
@@ -970,7 +872,7 @@ competentes y comprometidos con la ciencia.
 
             <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
               <a class="btn" href="#planes" style="background:#0A1220; color:#fff; border-color:#0A1220">Ver planes</a>
-              <a class="btn cta" id="ctaQuick" href="#">Whatsapp AURA</a>
+              <a class="btn cta" id="ctaQuick" href="#">WhatsApp AURA</a>
             </div>
 
             <div class="copyright">
@@ -984,39 +886,25 @@ competentes y comprometidos con la ciencia.
   </div>
 
   <div class="float">
-    <a class="btn cta" href="#contacto">Solicitar info</a>
+    <a class="btn cta" href="#contacto">WhatsApp AURA</a>
   </div>
 
   <script>
-    // ✅ Cambia este número (formato internacional). Ecuador: +593 y sin el 0 inicial.
+    // Ecuador: +593 y sin el 0 inicial.
     const PHONE = "593996484119";
 
-    // ✅ Imágenes del banner (URLs o rutas locales)
-	
     const BANNER_IMAGES = [
-		  "./banner-1.png",
-		  "./banner-2.png",
-		  "./banner-3.png"
-		];
+      "./banner-1.png",
+      "./banner-2.png",
+      "./banner-3.png"
+    ];
 
-    // ✅ Imágenes de galería (puedes poner tuyas)
     const GALLERY_IMAGES = [
-		  "./galeria1.png",
-		  "./galeria2.png",
-		  "./galeria3.png",
-		  "./galeria4.png"
-		];
-
-    // ✅ Artículo de la semana (edita aquí cada semana)
-    const WEEKLY_PAPER = {
-      title: "Senolíticos: El primer paso real hacia la reversión del envejecimiento cognitivo",
-      abstract: "Este estudio piloto investigó la viabilidad y seguridad de los senolíticos Dasatinib y Quercetina en adultos mayores con riesgo de Alzheimer. La intervención buscó eliminar células senescentes para mejorar déficits en la cognición y la velocidad de la marcha. Los resultados preliminares sugieren que este tratamiento intermitente es seguro y podría ofrecer beneficios funcionales significativos.",
-      citation: "Millar CL, Iloputaife I, Baldyga K, Norling AM, Boulougoura A, Vichos T, et al. A pilot study of senolytics to improve cognition and mobility in older adults at risk for Alzheimer's disease. eBioMedicine. 2025;113:105612. doi:10.1016/j.ebiom.2025.105612",
-      image: "./revista.png",
-      takeaway: "Te lo traduzco en 3 ideas accionables para tu tesis.",
-      key1: "Se utilizaron correlaciones de Spearman para vincular cambios en biomarcadores con resultados funcionales, revelando una asociación significativa entre menor inflamación y mejor cognición (r=-0.65, P=0.02). Se aplicaron modelos lineales mixtos para evaluar trayectorias de cambio y t-tests para comparar concentraciones de biomarcadores contra un grupo control. Los intervalos de confianza del 95% confirmaron la relevancia estadística de las mejoras en los subgrupos con mayor deterioro.",
-      key2: "La investigación concluye que la terapia senolítica intermitente es una estrategia factible para modular el fenotipo secretor asociado a la senescencia (SASP). Estos hallazgos sientan las bases para futuros ensayos clínicos aleatorizados a gran escala con grupos de control de placebo. El objetivo final es validar si la eliminación dirigida de células <<zombie>> puede prevenir formalmente la progresión hacia la demencia tipo Alzheimer.",
-    };
+      "./galeria1.png",
+      "./galeria2.png",
+      "./galeria3.png",
+      "./galeria4.png"
+    ];
 
     function waLink(msg){
       return `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
@@ -1024,7 +912,7 @@ competentes y comprometidos con la ciencia.
 
     function buildMessage(extra){
       const name = (document.getElementById('name')?.value || '').trim();
-      const need = document.getElementById('need')?.value || 'Plan AURA Esencial';
+      const need = document.getElementById('need')?.value || 'Quiero que me recomienden un plan';
       const deadline = (document.getElementById('deadline')?.value || '').trim();
       const context = (document.getElementById('context')?.value || '').trim();
 
@@ -1033,7 +921,7 @@ competentes y comprometidos con la ciencia.
       const ctx = context ? ` Contexto: ${context}.` : '';
       const add = extra ? ` ${extra}` : '';
 
-      return `${who} Vengo desde la web de AURA Research. Quiero: ${need}.${lim}${ctx}${add} ¿Cómo empezamos y qué debo enviarte?`;
+      return `${who} Vengo desde la web de AURA Research. Necesito: ${need}.${lim}${ctx}${add} ¿Cómo empezamos y qué debo enviarte?`;
     }
 
     // Header scroll state
@@ -1079,25 +967,6 @@ competentes y comprometidos con la ciencia.
     if(g1) g1.style.backgroundImage = `url('${GALLERY_IMAGES[1]}')`;
     if(g2) g2.style.backgroundImage = `url('${GALLERY_IMAGES[2]}')`;
     if(g3) g3.style.backgroundImage = `url('${GALLERY_IMAGES[3]}')`;
-
-    // Weekly paper inject
-    const pt = document.getElementById('paperTitle');
-    const pa = document.getElementById('paperAbstract');
-    const pc = document.getElementById('paperCitation');
-    const pi = document.getElementById('paperImg');
-    const tk = document.getElementById('paperTakeaway');
-    const k1 = document.getElementById('k1');
-    const k2 = document.getElementById('k2');
-    const k3 = document.getElementById('k3');
-
-    if(pt) pt.textContent = WEEKLY_PAPER.title;
-    if(pa) pa.textContent = WEEKLY_PAPER.abstract;
-    if(pc) pc.textContent = WEEKLY_PAPER.citation;
-    if(pi) pi.style.backgroundImage = `url('${WEEKLY_PAPER.image}')`;
-    if(tk) tk.textContent = WEEKLY_PAPER.takeaway;
-    if(k1) k1.textContent = WEEKLY_PAPER.key1;
-    if(k2) k2.textContent = WEEKLY_PAPER.key2;
-    if(k3) k3.textContent = WEEKLY_PAPER.key3;
 
     // Contact CTAs (WhatsApp)
     const ctaSend = document.getElementById('ctaSend');
